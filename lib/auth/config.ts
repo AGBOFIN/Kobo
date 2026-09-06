@@ -13,6 +13,14 @@ const loginSchema = z.object({
 })
 
 export const authConfig: NextAuthConfig = {
+  // NextAuth v5 lit AUTH_SECRET en priorité ; la valeur explicite ci-dessous
+  // garantit que NEXTAUTH_SECRET (défini sur Vercel) est bien utilisé aussi.
+  // Sans cela, le build de production lève MissingSecret sur toutes les
+  // routes /api/auth/* (message « There was a problem with the server
+  // configuration ») — bug de connexion vu en prod le 2026-09-06.
+  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+  // Requis en v5 derrière un proxy/sous-domaine Vercel pour valider l'hôte.
+  trustHost: true,
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: 'jwt',
