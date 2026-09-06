@@ -1,0 +1,117 @@
+import type { NextAuthConfig } from 'next-auth'
+import { PrismaAdapter } from '@auth/prisma-adapter'
+import { prisma } from '@/lib/db/prisma'
+import Credentials from 'next-auth/providers/credentials'
+import bcrypt from 'bcryptjs'
+import { z } from 'zod'
+import { logError } from '@/lib/errors/log-error'
+import { checkRateLimit, peekRateLimit, resetRateLimit } from '@/lib/security/rate-limit'
+
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+})
+
+export const authConfig: NextAuthConfig = {
+  adapter: PrismaAdapter(prisma),
+  session: {
+    strategy: 'jwt',
+  },
+  pages: {
+    signIn: '/login',
+    error: '/error',
+  },
+  providers: [
+    Credentials({
+      credentials: {
+        email: {},
+        password: {},
+      },
+      authorize: async (credentials) => {
+        const validatedFields = loginSchema.safeParse(credentials)
+
+        if (!validatedFields.success) {
+          await logError({
+            errorType: 'AUTH_LOGIN_FAILED',
+            message: 'Identifiants invalides (format)',
+            context: { route: 'authorize' },
+          })
+          return null
+        }
+
+        const { email, password } = validatedFields.data
+
+        // Rate limiting login : 8 échecs / email / 15 min. On ne consomme un
+        // jeton QUE sur échec — un utilisateur qui se trompe deux fois n'est
+        // pas pénalisé au-delà, et un succès ne compte pas.
+        const rlKey = `login:email:${email.toLowerCase()}`
+        const rl = peekRateLimit(rlKey, 8, 15 * 60 * 1000)
+        if (!rl.allowed) {
+          await logError({
+            errorType: 'AUTH_RATE_LIMITED',
+            message: `Trop de tentatives de connexion pour ${email}`,
+          })
+          return null
+        }
+
+        const user = await prisma.user.findUnique({
+          where: { email },
+        })
+
+        if (!user || !user.passwordHash) {
+          checkRateLimit(rlKey, 8, 15 * 60 * 1000)
+          await logError({
+            errorType: 'AUTH_LOGIN_FAILED',
+            message: `Échec de connexion : compte introuvable pour ${email}`,
+          })
+          return null
+        }
+
+        const passwordsMatch = await bcrypt.compare(password, user.passwordHash)
+
+        if (!passwordsMatch) {
+          checkRateLimit(rlKey, 8, 15 * 60 * 1000)
+          await logError({
+            errorType: 'AUTH_LOGIN_FAILED',
+            message: `Échec de connexion : mot de passe incorrect pour ${email}`,
+          })
+          return null
+        }
+
+        if (!user.active) {
+          await logError({
+            errorType: 'AUTH_LOGIN_BLOCKED',
+            message: `Tentative de connexion sur compte désactivé : ${email}`,
+          })
+          return null
+        }
+
+        // Connexion réussie : on repart sur un bucket propre
+        resetRateLimit(rlKey)
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role as 'USER' | 'ADMIN',
+        }
+      },
+    }),
+  ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id as string
+        token.role = user.role as 'USER' | 'ADMIN'
+      }
+      return token
+    },
+    async session({ session, token }) {
+      if (token && session.user) {
+        session.user.id = token.id as string
+        session.user.role = token.role as 'USER' | 'ADMIN'
+      }
+      return session
+    },
+  },
+}

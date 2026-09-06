@@ -1,0 +1,201 @@
+// Prisma schema for Kobo SaaS MVP — PRODUCTION
+// Database: PostgreSQL (Neon ou Supabase, déployé sur Vercel).
+// Migrations versionnées : npx prisma migrate dev --schema prisma/schema.postgres.prisma
+//
+// DEUX SCHÉMAS, mêmes modèles (garder synchronisés) :
+//  - schema.prisma           → SQLite (défaut) : dev local, E2E, build local
+//  - schema.postgres.prisma  → PostgreSQL : migrations versionnées + build Vercel
+// Le provider ne peut pas venir de env() (limitation Prisma, prisma/orm#1487).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")       // pooler transactionnel (6543, pgbouncer) — runtime
+  directUrl = env("DIRECT_URL")         // connexion directe (5432) — migrations DDL
+}
+
+model User {
+  id                String    @id @default(cuid())
+  email             String    @unique
+  passwordHash      String
+  name              String
+  phone             String?
+  companyName       String?
+  address           String?
+  logoUrl           String?
+  currency          String    @default("XOF")
+  role              String    @default("USER")
+  active            Boolean   @default(true)
+  resetToken        String?
+  resetTokenExpiry  DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  creditBalance     CreditBalance?
+  creditPurchases   CreditPurchase[]
+  invoices          Invoice[]
+  sessions          Session[]
+
+  @@index([email])
+  @@index([role])
+}
+
+model CreditBalance {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  balanceCredits  Int      @default(0)
+  updatedAt       DateTime @updatedAt
+  createdAt       DateTime @default(now())
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model CreditPack {
+  id              String   @id @default(cuid())
+  name            String
+  price           Int      // Prix en FCFA
+  creditsCount    Int      // Nombre de crédits inclus
+  active          Boolean  @default(true)
+  // ID du produit Chariow correspondant (ex: "prd_abc123") — utilisé par le
+  // ChariowProvider pour créer les sessions de checkout. Vide = pack sans produit.
+  chariowProductId String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  creditPurchases CreditPurchase[]
+
+  @@index([active])
+}
+
+model CreditPurchase {
+  id                String        @id @default(cuid())
+  userId            String
+  packId            String
+  amount            Int
+  creditsPurchased  Int
+  status            String        @default("EN_ATTENTE")
+  provider          String
+  transactionRef    String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pack              CreditPack    @relation(fields: [packId], references: [id])
+
+  // Déduplication des webhooks Chariow : une référence de vente ne peut être
+  // confirmée qu'une seule fois (contrainte au niveau base de données).
+  @@unique([provider, transactionRef])
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Invoice {
+  id                String        @id @default(cuid())
+  userId            String
+  invoiceNumber     String
+  clientName        String
+  clientPhone       String
+  date              DateTime      @default(now())
+  subtotal          Int
+  discount          Int           @default(0)
+  discountPercent   Float?
+  deliveryFee       Int           @default(0)
+  totalAmount       Int
+  amountPaid        Int           @default(0)
+  remainingAmount   Int
+  paymentMode       String?
+  status            String        @default("NON_PAYE")
+  pdfUrl            String?        // URL API de téléchargement (générée au premier téléchargement)
+  pdfToken          String?        @unique // Jeton d'accès au PDF pour le partage temporaire
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items             InvoiceItem[]
+
+  @@unique([userId, invoiceNumber])
+  @@index([userId])
+  @@index([invoiceNumber])
+  @@index([date])
+  @@index([status])
+}
+
+model InvoiceItem {
+  id              String   @id @default(cuid())
+  invoiceId       String
+  designation     String   // Nom du produit
+  quantity        Int
+  unitPrice       Int      // Prix unitaire en FCFA
+  lineTotal       Int      // Total ligne (quantity * unitPrice)
+
+  invoice         Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([invoiceId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  sessionToken String   @unique
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([sessionToken])
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  userId      String?  // Null si action système
+  action      String   // Type d'action (CREATE_INVOICE, BUY_CREDITS, etc.)
+  entityType  String   // Type d'entité concernée
+  entityId    String?  // ID de l'entité
+  details     String?  // Détails JSON de l'action
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([entityType])
+  @@index([createdAt])
+}
+
+model WebhookLog {
+  id            String    @id @default(cuid())
+  provider      String    // Ex: CHARIOW, MANUAL
+  eventType     String    // Type d'événement reçu
+  deliveryId    String?   // x-pulse-delivery-id Chariow — clé d'idempotence des livraisons
+  payload       String    // Payload brut JSON du webhook
+  processed     Boolean   @default(false)
+  processedAt   DateTime?
+  error         String?
+  createdAt     DateTime  @default(now())
+
+  @@unique([provider, deliveryId])
+  @@index([provider])
+  @@index([createdAt])
+}
+
+model ErrorLog {
+  id          String   @id @default(cuid())
+  userId      String?  // Null si erreur système
+  errorType   String   // Type d'erreur
+  message     String   // Message d'erreur
+  stackTrace  String?  // Stack trace
+  context     String?  // Contexte JSON
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([errorType])
+  @@index([createdAt])
+}
