@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { signIn } from 'next-auth/react'
+import { signIn, getSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
@@ -29,7 +29,12 @@ export default function LoginPage() {
       if (result?.error) {
         setError('Email ou mot de passe incorrect')
       } else {
-        router.push('/dashboard/dashboard')
+        // Redirection selon le rôle : un administrateur arrive directement
+        // dans son espace, un commerçant dans son tableau de bord.
+        const session = await getSession()
+        router.push(
+          session?.user?.role === 'ADMIN' ? '/admin' : '/dashboard/dashboard'
+        )
         router.refresh()
       }
     } catch (error) {

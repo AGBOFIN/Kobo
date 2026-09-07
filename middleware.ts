@@ -17,7 +17,13 @@ export async function middleware(request: NextRequest) {
   const isAdminPage = pathname.startsWith('/admin')
 
   if (isAuthPage && session?.user) {
-    return NextResponse.redirect(new URL('/dashboard/dashboard', request.url))
+    // Déjà connecté : chacun rejoint son espace (l'admin arrive sur /admin).
+    return NextResponse.redirect(
+      new URL(
+        session.user.role === 'ADMIN' ? '/admin' : '/dashboard/dashboard',
+        request.url
+      )
+    )
   }
 
   if (isDashboardPage && !session?.user) {
