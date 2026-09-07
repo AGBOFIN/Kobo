@@ -28,6 +28,9 @@ export default function LoginPage() {
 
       if (result?.error) {
         setError('Email ou mot de passe incorrect')
+        // Le message s'affiche en haut du formulaire : on y ramène l'œil,
+        // sinon l'utilisateur reste en bas sur le bouton et ne voit RIEN.
+        window.scrollTo({ top: 0, behavior: 'smooth' })
       } else {
         // Redirection selon le rôle : un administrateur arrive directement
         // dans son espace, un commerçant dans son tableau de bord.

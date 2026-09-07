@@ -46,6 +46,8 @@ export default function RegisterPage() {
 
       if (!response.ok) {
         setError(data.error || 'Une erreur est survenue')
+        // Le message s'affiche en haut du formulaire : on y ramène l'œil.
+        window.scrollTo({ top: 0, behavior: 'smooth' })
         return
       }
 
