@@ -15,6 +15,14 @@ export default function ProfilePage() {
   const [logoUrl, setLogoUrl] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [pwdData, setPwdData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  })
+  const [pwdLoading, setPwdLoading] = useState(false)
+  const [pwdMessage, setPwdMessage] = useState('')
+  const [pwdError, setPwdError] = useState('')
 
   useEffect(() => {
     loadProfile()
@@ -97,6 +105,44 @@ export default function ProfilePage() {
     } finally {
       setUploading(false)
       if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+  }
+
+  const handlePasswordChange = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setPwdError('')
+    setPwdMessage('')
+
+    if (pwdData.newPassword !== pwdData.confirmPassword) {
+      setPwdError('Les nouveaux mots de passe ne correspondent pas')
+      return
+    }
+    if (pwdData.newPassword.length < 6) {
+      setPwdError('Le nouveau mot de passe doit contenir au moins 6 caractères')
+      return
+    }
+
+    setPwdLoading(true)
+    try {
+      const res = await fetch('/api/profile/password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          currentPassword: pwdData.currentPassword,
+          newPassword: pwdData.newPassword,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setPwdError(data.error || 'Une erreur est survenue')
+        return
+      }
+      setPwdMessage('Mot de passe modifié avec succès')
+      setPwdData({ currentPassword: '', newPassword: '', confirmPassword: '' })
+    } catch {
+      setPwdError('Une erreur est survenue')
+    } finally {
+      setPwdLoading(false)
     }
   }
 
@@ -256,6 +302,89 @@ export default function ProfilePage() {
             className="btn btn-primary btn-lg w-full sm:w-auto sm:px-10"
           >
             {loading ? 'Mise à jour...' : 'Enregistrer'}
+          </button>
+        </form>
+      </div>
+
+      {/* ===== Changer le mot de passe ===== */}
+      <div className="card card-pad mt-5">
+        <h2 className="font-semibold text-stone-900">Changer le mot de passe</h2>
+        <p className="mt-1 text-sm text-stone-500">
+          Votre nouveau mot de passe doit contenir au moins 6 caractères.
+        </p>
+
+        {pwdMessage && (
+          <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+            {pwdMessage}
+          </div>
+        )}
+        {pwdError && (
+          <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {pwdError}
+          </div>
+        )}
+
+        <form onSubmit={handlePasswordChange} className="mt-4 space-y-5">
+          <div>
+            <label htmlFor="currentPassword" className="label">
+              Mot de passe actuel
+            </label>
+            <input
+              type="password"
+              id="currentPassword"
+              value={pwdData.currentPassword}
+              onChange={(e) =>
+                setPwdData({ ...pwdData, currentPassword: e.target.value })
+              }
+              className="input"
+              autoComplete="current-password"
+              required
+            />
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label htmlFor="newPassword" className="label">
+                Nouveau mot de passe
+              </label>
+              <input
+                type="password"
+                id="newPassword"
+                value={pwdData.newPassword}
+                onChange={(e) =>
+                  setPwdData({ ...pwdData, newPassword: e.target.value })
+                }
+                className="input"
+                placeholder="••••••••"
+                autoComplete="new-password"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="confirmPassword" className="label">
+                Confirmer le nouveau mot de passe
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                value={pwdData.confirmPassword}
+                onChange={(e) =>
+                  setPwdData({ ...pwdData, confirmPassword: e.target.value })
+                }
+                className="input"
+                placeholder="••••••••"
+                autoComplete="new-password"
+                required
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={pwdLoading}
+            className="btn btn-primary btn-lg w-full sm:w-auto sm:px-10"
+          >
+            {pwdLoading ? 'Modification...' : 'Changer le mot de passe'}
           </button>
         </form>
       </div>
