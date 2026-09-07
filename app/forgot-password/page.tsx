@@ -47,6 +47,14 @@ export default function ForgotPasswordPage() {
         </p>
       </div>
 
+      {/* Envoi d'emails pas encore actif (MVP) : éviter d'attendre un lien
+          qui ne partira pas. À retirer dès que le fournisseur est configuré. */}
+      <div className="mb-5 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        ⚠️ L&apos;envoi d&apos;emails n&apos;est pas encore activé : le lien de
+        réinitialisation ne vous parviendra pas par email pour le moment.
+        Contactez le support pour obtenir votre lien.
+      </div>
+
       {message && (
         <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
           {message}
