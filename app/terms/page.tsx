@@ -10,8 +10,7 @@ export const metadata: Metadata = {
 /**
  * Page légale — CGU (contenu statique, aucun accès DB).
  *
- * ⚠️ Champ à personnaliser encore présent entre crochets : nom de l'éditeur
- * (recherchez « [ » dans ce fichier). L'email de contact et l'URL sont remplis.
+ * Éditeur : HUB DIG (Togo). L'email de contact et l'URL sont remplis.
  */
 export default function TermsPage() {
   return (
@@ -46,10 +45,9 @@ export default function TermsPage() {
               Les présentes conditions générales d&apos;utilisation (ci-après
               «&nbsp;CGU&nbsp;») régissent l&apos;accès et l&apos;utilisation de la
               plateforme Kobo (ci-après «&nbsp;le Service&nbsp;»), éditée par{' '}
-              <strong className="font-medium text-stone-800">
-                [nom de votre entreprise/entrepreneur individuel]
-              </strong>
-              , accessible à l&apos;adresse{' '}
+              <strong className="font-medium text-stone-800">HUB DIG</strong>,
+              société établie au <strong className="font-medium text-stone-800">Togo</strong>,
+              accessible à l&apos;adresse{' '}
               <a
                 href="https://facomptkobo.vercel.app"
                 className="font-medium text-primary-600 hover:text-primary-700"

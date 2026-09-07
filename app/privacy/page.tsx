@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 /**
  * Page légale — Politique de confidentialité (contenu statique, aucun accès DB).
  *
- * ⚠️ Champs à personnaliser encore présents entre crochets : nom de l'éditeur,
- * ville, email de contact (recherchez « [ » dans ce fichier).
+ * Éditeur : HUB DIG (Togo). L'email de contact est rempli.
+ */
  */
 export default function PrivacyPage() {
   return (
@@ -45,8 +45,8 @@ export default function PrivacyPage() {
             <p className="mt-3">
               Kobo est une plateforme web permettant aux commerçants de calculer leur
               prix de vente et de générer des factures professionnelles. Kobo est édité
-              par <strong className="font-medium text-stone-800">[nom de votre entreprise/entrepreneur individuel]</strong>,
-              basé à <strong className="font-medium text-stone-800">[ville, Togo]</strong>.
+              par <strong className="font-medium text-stone-800">HUB DIG</strong>,
+              basé au <strong className="font-medium text-stone-800">Togo</strong>.
             </p>
             <p className="mt-3">
               Pour toute question relative à cette politique ou à vos données
