@@ -12,7 +12,6 @@ export const metadata: Metadata = {
  *
  * Éditeur : HUB DIG (Togo). L'email de contact est rempli.
  */
- */
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-stone-50">
