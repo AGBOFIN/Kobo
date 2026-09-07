@@ -319,10 +319,12 @@ export default function Home() {
           <p className="text-sm text-stone-500">
             © {new Date().getFullYear()} Kobo — Calcul de prix & facturation pour commerçants
           </p>
-          <div className="flex items-center gap-4 text-sm text-stone-500">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-stone-500">
             <Link href="/calculateur" className="hover:text-stone-900">Calculateur</Link>
             <Link href="/login" className="hover:text-stone-900">Connexion</Link>
             <Link href="/register" className="hover:text-stone-900">Inscription</Link>
+            <Link href="/terms" className="hover:text-stone-900">CGU</Link>
+            <Link href="/privacy" className="hover:text-stone-900">Confidentialité</Link>
           </div>
         </div>
       </footer>

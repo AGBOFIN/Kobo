@@ -146,7 +146,15 @@ export default function RegisterPage() {
         </button>
 
         <p className="text-center text-xs text-stone-500">
-          En créant un compte, vous acceptez les conditions d’utilisation de Kobo.
+          En créant un compte, vous acceptez nos{' '}
+          <Link href="/terms" className="underline hover:text-stone-700">
+            conditions d’utilisation
+          </Link>{' '}
+          et notre{' '}
+          <Link href="/privacy" className="underline hover:text-stone-700">
+            politique de confidentialité
+          </Link>
+          .
         </p>
       </form>
 
