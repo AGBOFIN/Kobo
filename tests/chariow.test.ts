@@ -3,6 +3,7 @@ import { createHmac } from 'crypto'
 import {
   ChariowProvider,
   verifyChariowWebhookSignature,
+  toChariowPhone,
 } from '../lib/payment/chariow-provider'
 import { calculatePricing } from '../lib/validations/pricing'
 import { calculateInvoice } from '../lib/validations/invoice'
@@ -88,6 +89,56 @@ describe('Chariow — vérification de signature webhook (Pulse)', () => {
   it('rejette une signature ou un secret absent', () => {
     expect(verifyChariowWebhookSignature(payload, null, secret)).toBe(false)
     expect(verifyChariowWebhookSignature(payload, sign(payload, secret), '')).toBe(false)
+  })
+})
+
+/**
+ * Chariow — format du téléphone attendu par POST /v1/checkout.
+ *
+ * Doc (chariow.dev → Initiate Checkout) :
+ *   phone.number       = numéro NATIONAL, chiffres seuls (ex. US « 1234567890 »,
+ *                        sans l'indicatif « 1 ») ;
+ *   phone.country_code = code ISO 3166-1 alpha-2 (« TG », PAS « 228 »).
+ *
+ * Régression : « +22890123456 » était envoyé brut (indicatif inclus) → 400
+ * « Invalid phone number. Check the number and country code. »
+ */
+describe('Chariow — normalisation du téléphone (format API documenté)', () => {
+  it('retire l\'indicatif international +228 d\'un numéro togolais (cas du bug)', () => {
+    expect(toChariowPhone('+22890123456')).toEqual({
+      number: '90123456',
+      countryCode: 'TG',
+    })
+  })
+
+  it('gère les espaces et le préfixe international 00', () => {
+    expect(toChariowPhone('+228 90 12 34 56')).toEqual({ number: '90123456', countryCode: 'TG' })
+    expect(toChariowPhone('0022890123456')).toEqual({ number: '90123456', countryCode: 'TG' })
+  })
+
+  it('laisse tel quel un numéro déjà national (8 chiffres, Togo)', () => {
+    expect(toChariowPhone('90 12 34 56')).toEqual({ number: '90123456', countryCode: 'TG' })
+    // 8 chiffres commençant par 22 : NE PAS confondre avec un indicatif
+    // (la numérotation togolaise à 8 chiffres prime sur la détection d'indicatif)
+    expect(toChariowPhone('22501234')).toEqual({ number: '22501234', countryCode: 'TG' })
+  })
+
+  it('retire le « 0 » de trunk initial (format local 9 chiffres)', () => {
+    expect(toChariowPhone('090123456')).toEqual({ number: '90123456', countryCode: 'TG' })
+  })
+
+  it('détecte les indicatifs des pays voisins et de la diaspora', () => {
+    expect(toChariowPhone('+229 97 12 34 56')).toEqual({ number: '97123456', countryCode: 'BJ' })
+    expect(toChariowPhone('+226 70 12 34 56')).toEqual({ number: '70123456', countryCode: 'BF' })
+    expect(toChariowPhone('+225 07 12 34 56 78')).toEqual({ number: '0712345678', countryCode: 'CI' })
+    expect(toChariowPhone('+233 24 123 4567')).toEqual({ number: '241234567', countryCode: 'GH' })
+    expect(toChariowPhone('+33 6 12 34 56 78')).toEqual({ number: '612345678', countryCode: 'FR' })
+  })
+
+  it('tombe sur un placeholder propre quand il n\'y a aucun numéro', () => {
+    expect(toChariowPhone('')).toEqual({ number: '00000000', countryCode: 'TG' })
+    expect(toChariowPhone(null)).toEqual({ number: '00000000', countryCode: 'TG' })
+    expect(toChariowPhone('pas un numéro')).toEqual({ number: '00000000', countryCode: 'TG' })
   })
 })
 

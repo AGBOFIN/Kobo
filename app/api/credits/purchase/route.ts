@@ -69,6 +69,15 @@ export async function POST(request: NextRequest) {
 
     const { provider, name: providerName } = getPaymentProvider()
 
+    // Chariow exige un téléphone client (champ requis de l'API checkout) —
+    // mieux vaut un message clair ici qu'une erreur API générique plus loin.
+    if (providerName === 'CHARIOW' && !user?.phone) {
+      return NextResponse.json(
+        { error: 'Ajoutez votre numéro de téléphone dans votre profil (Profil → Téléphone) avant de payer — il est requis par la plateforme de paiement.' },
+        { status: 400 }
+      )
+    }
+
     // L'URL de retour après paiement (checkout Chariow)
     const origin = request.nextUrl.origin
     const callbackUrl = `${origin}/dashboard/credits`
@@ -83,6 +92,9 @@ export async function POST(request: NextRequest) {
         name: user?.name,
         phone: user?.phone || undefined,
         callbackUrl,
+        // Recommandation doc Chariow : IP de l'acheteur pour les moyens de
+        // paiement proposés au checkout (mobile money selon le pays).
+        customerIp: clientIp(request),
         // Chariow : le prix est porté par le produit côté Chariow — chaque
         // pack Kobo doit être associé à un produit (voir env.example).
         productId: (pack as any).chariowProductId || undefined,
@@ -101,9 +113,12 @@ export async function POST(request: NextRequest) {
         userId: session.user.id,
         ...requestMeta(request),
       })
+      // Message générique côté client : le détail technique (401 clé API,
+      // réseau, réponse inattendue du provider…) reste dans le journal des
+      // erreurs, consultable par l'admin (Dashboard → Admin → Erreurs).
       return NextResponse.json(
-        { error: paymentResult.error || 'Erreur lors de l\'initialisation du paiement' },
-        { status: 500 }
+        { error: 'Le paiement en ligne est momentanément indisponible. Notre équipe a été notifiée — réessayez dans quelques instants.' },
+        { status: 502 }
       )
     }
 

@@ -24,6 +24,8 @@ export interface PaymentProviderInterface {
       callbackUrl?: string
       /** Chariow : ID du produit correspondant au pack (le prix est porté par le produit côté Chariow). */
       productId?: string
+      /** IP du client (recommandé par Chariow : améliore les moyens de paiement proposés au checkout). */
+      customerIp?: string
     }
   ): Promise<{
     success: boolean
