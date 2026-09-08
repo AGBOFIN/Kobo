@@ -64,8 +64,26 @@ export async function POST(request: NextRequest) {
     )
   } catch (error) {
     console.error('Registration error:', error)
+    
+    // Messages d'erreur plus spécifiques selon le type d'erreur
+    if (error instanceof Error) {
+      if (error.message.includes('DATABASE_URL') || error.message.includes('PrismaClientInitializationError')) {
+        return NextResponse.json(
+          { error: 'Erreur de configuration de la base de données. Veuillez contacter le support.' },
+          { status: 500 }
+        )
+      }
+      
+      if (error.message.includes('unique constraint') || error.message.includes('email')) {
+        return NextResponse.json(
+          { error: 'Cet email est déjà utilisé. Essayez de vous connecter à la place.' },
+          { status: 400 }
+        )
+      }
+    }
+    
     return NextResponse.json(
-      { error: 'Une erreur est survenue lors de la création du compte' },
+      { error: 'Une erreur technique est survenue. Veuillez réessayer ou contacter le support.' },
       { status: 500 }
     )
   }
