@@ -67,6 +67,12 @@ export async function POST(request: NextRequest) {
     
     // Messages d'erreur plus spécifiques selon le type d'erreur
     if (error instanceof Error) {
+      console.error('Error details:', {
+        message: error.message,
+        name: error.name,
+        stack: error.stack,
+      })
+      
       if (error.message.includes('DATABASE_URL') || error.message.includes('PrismaClientInitializationError')) {
         return NextResponse.json(
           { error: 'Erreur de configuration de la base de données. Veuillez contacter le support.' },
