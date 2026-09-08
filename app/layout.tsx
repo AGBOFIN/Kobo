@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { PWAInstallPrompt } from "@/components/pwa-install-prompt";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,12 +20,18 @@ export const metadata: Metadata = {
   },
   description:
     "Calculez vos prix de vente avec une vraie marge et créez des factures professionnelles à partager sur WhatsApp, en moins de 2 minutes.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Kobo",
+  },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#059669",
+  themeColor: "#FF6B35",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -33,7 +40,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="fr"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <PWAInstallPrompt />
+      </body>
     </html>
   );
 }

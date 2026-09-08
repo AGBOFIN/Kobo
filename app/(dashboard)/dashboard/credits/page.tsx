@@ -94,16 +94,16 @@ export default function CreditsPage() {
       </div>
 
       {/* ===== Solde ===== */}
-      <div className="mb-8 flex items-center justify-between rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 p-6 text-white shadow-md shadow-emerald-600/20">
+      <div className="mb-8 flex items-center justify-between rounded-2xl bg-gradient-to-br from-primary-600 to-primary-700 p-6 text-white shadow-md shadow-primary-600/20">
         <div>
-          <p className="text-sm text-emerald-50/90">Votre solde actuel</p>
+          <p className="text-sm text-primary-50/90">Votre solde actuel</p>
           <p className="mt-1 text-3xl font-bold">
             {balance} crédit{balance > 1 ? 's' : ''}
           </p>
         </div>
         <Link
           href="/dashboard/dashboard"
-          className="btn btn-sm bg-white text-emerald-700 hover:bg-emerald-50"
+          className="btn btn-sm bg-white text-primary-700 hover:bg-primary-50"
         >
           ← Dashboard
         </Link>
@@ -113,7 +113,7 @@ export default function CreditsPage() {
         <div
           className={`mb-6 rounded-xl border px-4 py-3 text-sm ${
             message.includes('succès')
-              ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
+              ? 'border-accent-200 bg-accent-50 text-accent-700'
               : 'border-red-200 bg-red-50 text-red-700'
           }`}
         >

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { calculateInvoice, type CreateInvoiceInput, type InvoiceItemInput } from '@/lib/validations/invoice'
+import { User, Package, CreditCard, Check, X } from 'lucide-react'
 
 export default function NewInvoicePage() {
   const router = useRouter()
@@ -124,7 +125,7 @@ export default function NewInvoicePage() {
         <section className="card card-pad">
           <div className="mb-5 flex items-center gap-3">
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white">
-              👤
+              <User className="h-5 w-5" />
             </span>
             <h2 className="text-lg font-semibold text-foreground">Informations client</h2>
           </div>
@@ -146,7 +147,10 @@ export default function NewInvoicePage() {
               {formData.clientName && (
                 <div className="mt-1 flex items-center gap-1.5 text-xs">
                   {formData.clientName.length > 0 ? (
-                    <span className="text-success-600 font-medium">✓ Validé</span>
+                    <span className="text-success-600 font-medium flex items-center gap-1">
+                      <Check className="h-3 w-3" />
+                      Validé
+                    </span>
                   ) : (
                     <span className="text-red-600">Requis</span>
                   )}
@@ -170,7 +174,10 @@ export default function NewInvoicePage() {
               {formData.clientPhone && (
                 <div className="mt-1 flex items-center gap-1.5 text-xs">
                   {formData.clientPhone.length > 0 ? (
-                    <span className="text-success-600 font-medium">✓ Validé</span>
+                    <span className="text-success-600 font-medium flex items-center gap-1">
+                      <Check className="h-3 w-3" />
+                      Validé
+                    </span>
                   ) : (
                     <span className="text-red-600">Requis</span>
                   )}
@@ -185,7 +192,7 @@ export default function NewInvoicePage() {
           <div className="mb-5 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white">
-                📦
+                <Package className="h-5 w-5" />
               </span>
               <h2 className="text-lg font-semibold text-foreground">Produits</h2>
             </div>
@@ -249,7 +256,7 @@ export default function NewInvoicePage() {
                         className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 transition-colors"
                         aria-label="Supprimer le produit"
                       >
-                        ×
+                        <X className="h-5 w-5" />
                       </button>
                     </div>
                   )}
@@ -263,7 +270,7 @@ export default function NewInvoicePage() {
         <section className="card card-pad">
           <div className="mb-5 flex items-center gap-3">
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white">
-              💳
+              <CreditCard className="h-5 w-5" />
             </span>
             <h2 className="text-lg font-semibold text-foreground">Détails de paiement</h2>
           </div>

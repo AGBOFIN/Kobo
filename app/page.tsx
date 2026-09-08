@@ -1,34 +1,35 @@
 import Link from 'next/link'
 import { KoboLogo } from '@/components/brand/logo'
+import { Clock, FileText, Calculator, Smartphone, Banknote, Lock, Sparkles, Check } from 'lucide-react'
 
 const benefits = [
   {
-    icon: '⏱️',
+    icon: Clock,
     title: 'Gain de temps massif',
     description: 'Plus de calculs à la main ou sur Excel. Tout est automatique. Une facture en moins de 2 minutes.',
   },
   {
-    icon: '📄',
+    icon: FileText,
     title: 'Image professionnelle',
     description: 'Des factures propres et complètes qui inspirent confiance à vos clients. Plus de papier froissé.',
   },
   {
-    icon: '🧮',
+    icon: Calculator,
     title: 'Pas de calculs compliqués',
     description: 'Kobo fait les maths pour vous. Marge, TVA, réductions… tout est calculé instantanément.',
   },
   {
-    icon: '📱',
+    icon: Smartphone,
     title: '100% mobile',
     description: 'Fonctionne parfaitement sur téléphone, même avec connexion 3G. Pas besoin d\'ordinateur.',
   },
   {
-    icon: '💰',
+    icon: Banknote,
     title: 'Prix en FCFA',
     description: 'Tout est pensé pour l\'Afrique de l\'Ouest. Pas de conversion, pas de surprise. Des packs abordables.',
   },
   {
-    icon: '🔒',
+    icon: Lock,
     title: 'Vos données sont safe',
     description: 'Vos factures et informations clients sont sécurisées. Personne d\'autre n\'y a accès.',
   },
@@ -132,8 +133,9 @@ export default function Home() {
             <div className="grid items-center gap-8 lg:grid-cols-2">
               <div className="relative z-10">
                 <div className="mb-6 flex flex-wrap gap-2">
-                  <span className="badge bg-white/20 text-white backdrop-blur-sm">
-                    ✨ Conçu pour les commerçants africains
+                  <span className="badge bg-white/20 text-white backdrop-blur-sm flex items-center gap-1.5">
+                    <Sparkles className="h-4 w-4" />
+                    Conçu pour les commerçants africains
                   </span>
                 </div>
                 <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
@@ -181,10 +183,15 @@ export default function Home() {
                   <div className="mt-5 rounded-xl bg-success-50 p-3 text-sm">
                     <div className="flex items-center justify-between text-secondary-700">
                       <span className="font-medium">Facture n° FAC-2026-0001</span>
-                      <span className="badge badge-green">Payé ✓</span>
+                      <span className="badge badge-green flex items-center gap-1">
+                        <Check className="h-3 w-3" />
+                        Payé
+                      </span>
                     </div>
                     <div className="mt-2 flex items-center gap-2 text-xs text-secondary-600">
-                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-success-500 text-white text-xs">✓</span>
+                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-success-500 text-white">
+                        <Check className="h-3 w-3" />
+                      </span>
                       Envoyée sur WhatsApp
                     </div>
                   </div>
@@ -235,8 +242,8 @@ export default function Home() {
             <div className="mt-12 grid gap-6 md:grid-cols-2">
               {benefits.map((benefit) => (
                 <div key={benefit.title} className="card card-pad flex gap-4">
-                  <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-2xl">
-                    {benefit.icon}
+                  <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white">
+                    <benefit.icon className="h-7 w-7" />
                   </span>
                   <div>
                     <h3 className="text-lg font-semibold text-foreground">{benefit.title}</h3>
