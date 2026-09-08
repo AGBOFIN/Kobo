@@ -82,6 +82,7 @@ export default function RegisterPage() {
           <input
             type="text"
             id="name"
+            name="name"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             className="input"
@@ -98,11 +99,12 @@ export default function RegisterPage() {
           <input
             type="email"
             id="email"
+            name="email"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             className="input"
             placeholder="votre@email.com"
-            autoComplete="email"
+            autoComplete="username"
             required
           />
         </div>
@@ -114,6 +116,7 @@ export default function RegisterPage() {
           <input
             type="password"
             id="password"
+            name="password"
             value={formData.password}
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             className="input"
@@ -130,6 +133,7 @@ export default function RegisterPage() {
           <input
             type="password"
             id="confirmPassword"
+            name="confirmPassword"
             value={formData.confirmPassword}
             onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
             className="input"

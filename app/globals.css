@@ -1,58 +1,58 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palette Kobo — Soleil d'Afrique */
-  /* Primaire: Orange corail vibrant - énergie, chaleur, commerce */
-  --color-primary-50: #fff7ed;
-  --color-primary-100: #ffedd5;
-  --color-primary-200: #fed7aa;
-  --color-primary-300: #fdba74;
-  --color-primary-400: #ff8c5a;
-  --color-primary-500: #FF6B35;
-  --color-primary-600: #E85D2A;
-  --color-primary-700: #c2410c;
-  --color-primary-800: #9a3412;
-  --color-primary-900: #7c2d12;
+  /* Palette Kobo — Bold African Modern */
+  /* Primaire: Vert profond - nature africaine, croissance */
+  --color-primary-50: #f0f5f0;
+  --color-primary-100: #e0ebe0;
+  --color-primary-200: #c1dcc1;
+  --color-primary-300: #a2cda2;
+  --color-primary-400: #83be83;
+  --color-primary-500: #2d5a27;
+  --color-primary-600: #254a20;
+  --color-primary-700: #1d3a19;
+  --color-primary-800: #152a12;
+  --color-primary-900: #0d1a0b;
 
-  /* Secondaire: Bleu turquoise profond - confiance, professionnalisme */
-  --color-secondary-50: #f0f9ff;
-  --color-secondary-100: #e0f2fe;
-  --color-secondary-200: #bae6fd;
-  --color-secondary-300: #7dd3fc;
-  --color-secondary-400: #38bdf8;
-  --color-secondary-500: #0EA5E9;
-  --color-secondary-600: #0E7490;
-  --color-secondary-700: #155E75;
-  --color-secondary-800: #0c4a6e;
-  --color-secondary-900: #082f49;
+  /* Secondaire: Ocre jaune - terre, sable, chaleur */
+  --color-secondary-50: #fdf8ed;
+  --color-secondary-100: #fbf0db;
+  --color-secondary-200: #f7e0b7;
+  --color-secondary-300: #f3d093;
+  --color-secondary-400: #efc06f;
+  --color-secondary-500: #d4a017;
+  --color-secondary-600: #b88714;
+  --color-secondary-700: #9c6e11;
+  --color-secondary-800: #80550e;
+  --color-secondary-900: #643c0b;
 
-  /* Accent: Jaune doré - prospérité, succès */
-  --color-accent-50: #fef3c7;
-  --color-accent-100: #fde68a;
-  --color-accent-200: #fcd34d;
-  --color-accent-300: #fbbf24;
-  --color-accent-400: #f59e0b;
-  --color-accent-500: #F59E0B;
-  --color-accent-600: #d97706;
-  --color-accent-700: #b45309;
-  --color-accent-800: #92400e;
-  --color-accent-900: #78350f;
+  /* Accent: Rouge terre - vitalité, énergie */
+  --color-accent-50: #fef0f0;
+  --color-accent-100: #fde0e0;
+  --color-accent-200: #fcc0c0;
+  --color-accent-300: #faa0a0;
+  --color-accent-400: #f88080;
+  --color-accent-500: #c41e3a;
+  --color-accent-600: #a31931;
+  --color-accent-700: #821428;
+  --color-accent-800: #610f1f;
+  --color-accent-900: #400a14;
 
-  /* Succès: Vert émeraude - croissance, validation */
-  --color-success-50: #ecfdf5;
-  --color-success-100: #d1fae5;
-  --color-success-200: #a7f3d0;
-  --color-success-300: #6ee7b7;
-  --color-success-400: #34d399;
-  --color-success-500: #10b981;
-  --color-success-600: #047857;
-  --color-success-700: #047857;
-  --color-success-800: #065f46;
-  --color-success-900: #064e3b;
+  /* Succès: Vert - validation, confirmation */
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-200: #bbf7d0;
+  --color-success-300: #86efac;
+  --color-success-400: #4ade80;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+  --color-success-700: #15803d;
+  --color-success-800: #166534;
+  --color-success-900: #14532d;
 
-  /* Neutres: Blanc cassé chaud et gris anthracite */
-  --color-background: #FFFBF5;
-  --color-foreground: #1F2937;
+  /* Neutres: Blanc cassé et gris profond */
+  --color-background: #faf9f6;
+  --color-foreground: #1a1a1a;
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -80,7 +80,7 @@
 @layer components {
   /* ===== Boutons ===== */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-150 select-none whitespace-nowrap;
+    @apply inline-flex items-center justify-center gap-2 rounded-sm font-semibold transition-all duration-150 select-none whitespace-nowrap;
   }
   .btn:active {
     @apply scale-[0.98];
@@ -98,24 +98,24 @@
     @apply h-9 px-3.5 text-sm;
   }
   .btn-primary {
-    @apply bg-gradient-to-r from-primary-500 to-accent-500 text-white hover:from-primary-600 hover:to-accent-600 shadow-md shadow-primary-500/25;
+    @apply bg-primary-500 text-white hover:bg-primary-600 border-2 border-primary-500;
   }
   .btn-secondary {
-    @apply bg-white text-secondary-700 border border-secondary-500 hover:border-secondary-600 hover:bg-secondary-50 shadow-sm;
+    @apply bg-white text-foreground border-2 border-primary-500 hover:bg-primary-50;
   }
   .btn-ghost {
-    @apply text-secondary-600 hover:text-secondary-900 hover:bg-secondary-100;
+    @apply text-foreground hover:bg-primary-50;
   }
   .btn-success {
-    @apply bg-accent-600 text-white hover:bg-accent-700 shadow-md shadow-accent-600/25;
+    @apply bg-success-500 text-white hover:bg-success-600 border-2 border-success-500;
   }
   .btn-danger {
-    @apply bg-red-600 text-white hover:bg-red-700 shadow-md shadow-red-600/25;
+    @apply bg-accent-500 text-white hover:bg-accent-600 border-2 border-accent-500;
   }
 
   /* ===== Cartes ===== */
   .card {
-    @apply bg-white rounded-2xl border border-secondary-200/80 shadow-sm;
+    @apply bg-white rounded-sm border-2 border-primary-200;
   }
   .card-pad {
     @apply p-5 sm:p-6;
@@ -123,37 +123,37 @@
 
   /* ===== Formulaires ===== */
   .label {
-    @apply block text-sm font-medium text-secondary-700 mb-1.5;
+    @apply block text-sm font-medium text-foreground mb-1.5;
   }
   .input,
   .select {
-    @apply w-full h-11 px-3.5 rounded-xl border border-secondary-300 bg-white text-secondary-900 placeholder:text-secondary-400 text-sm sm:text-base transition-colors focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/25;
+    @apply w-full h-11 px-3.5 rounded-sm border-2 border-primary-300 bg-white text-foreground placeholder:text-primary-400 text-sm sm:text-base transition-colors focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/25;
   }
   .input-error {
-    @apply border-red-400 focus:border-red-500 focus:ring-red-500/25;
+    @apply border-accent-500 focus:border-accent-600 focus:ring-accent-500/25;
   }
   .select {
     @apply appearance-none pr-9 bg-no-repeat;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2378716c' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232d5a27' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
     background-position: right 0.75rem center;
     background-size: 1rem;
   }
 
   /* ===== Badges ===== */
   .badge {
-    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+    @apply inline-flex items-center gap-1.5 rounded-sm px-2.5 py-0.5 text-xs font-semibold border-2;
   }
   .badge-green {
-    @apply bg-success-50 text-success-700 ring-1 ring-inset ring-success-600/20;
+    @apply bg-success-50 text-success-700 border-success-300;
   }
   .badge-yellow {
-    @apply bg-accent-50 text-accent-700 ring-1 ring-inset ring-accent-600/20;
+    @apply bg-secondary-50 text-secondary-700 border-secondary-300;
   }
   .badge-red {
-    @apply bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20;
+    @apply bg-accent-50 text-accent-700 border-accent-300;
   }
   .badge-stone {
-    @apply bg-secondary-100 text-secondary-700 ring-1 ring-inset ring-secondary-600/10;
+    @apply bg-primary-50 text-foreground border-primary-200;
   }
 }
 

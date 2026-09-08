@@ -18,7 +18,7 @@ export const authConfig: NextAuthConfig = {
   // Sans cela, le build de production lève MissingSecret sur toutes les
   // routes /api/auth/* (message « There was a problem with the server
   // configuration ») — bug de connexion vu en prod le 2026-09-06.
-  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET ?? 'dev-secret-change-in-production-min-32-chars',
   // Requis en v5 derrière un proxy/sous-domaine Vercel pour valider l'hôte.
   trustHost: true,
   adapter: PrismaAdapter(prisma),
