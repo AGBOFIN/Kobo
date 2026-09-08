@@ -37,12 +37,14 @@ interface InvoiceTemplateProps {
   }
 }
 
-// Palette Kobo
-const EMERALD = '#059669'
-const EMERALD_DARK = '#064e3b'
+// Palette Kobo - Afro-Modernité
+const PRIMARY = '#ea580c'
+const PRIMARY_DARK = '#7c2d12'
+const SECONDARY = '#2c3e50'
+const MUTED = '#64748b'
+const LINE = '#e2e8f0'
+const ACCENT = '#059669'
 const INK = '#1c1917'
-const MUTED = '#78716c'
-const LINE = '#e7e5e4'
 
 function statusLabel(status: string): string {
   if (status === 'PAYE') return 'Payé'
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     paddingBottom: 16,
     borderBottomWidth: 2,
-    borderBottomColor: EMERALD,
+    borderBottomColor: PRIMARY,
     marginBottom: 20,
   },
   brandRow: {
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
     width: 26,
     height: 26,
     borderRadius: 7,
-    backgroundColor: EMERALD,
+    backgroundColor: PRIMARY,
     color: '#ffffff',
     fontSize: 15,
     fontWeight: 'bold',
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
   brandName: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: EMERALD_DARK,
+    color: PRIMARY_DARK,
     letterSpacing: 0.5,
   },
   titleBlock: {
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: EMERALD_DARK,
+    color: PRIMARY_DARK,
     letterSpacing: 2,
   },
   meta: {
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
   },
   tableHead: {
     flexDirection: 'row',
-    backgroundColor: EMERALD,
+    backgroundColor: PRIMARY,
     borderRadius: 4,
     paddingVertical: 6,
     paddingHorizontal: 8,
@@ -201,7 +203,7 @@ const styles = StyleSheet.create({
   totalRowBold: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: EMERALD_DARK,
+    backgroundColor: PRIMARY_DARK,
     color: '#ffffff',
     borderRadius: 4,
     paddingVertical: 7,

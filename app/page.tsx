@@ -1,36 +1,36 @@
 import Link from 'next/link'
 import { KoboLogo } from '@/components/brand/logo'
 
-const features = [
+const benefits = [
   {
-    icon: (
-      <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-      </svg>
-    ),
-    title: 'Calculateur de prix',
-    description:
-      'Entrez vos coûts (achat, transport, emballage…) et obtenez instantanément votre prix de vente avec la bonne marge. Gratuit et illimité.',
+    icon: '⏱️',
+    title: 'Gain de temps massif',
+    description: 'Plus de calculs à la main ou sur Excel. Tout est automatique. Une facture en moins de 2 minutes.',
   },
   {
-    icon: (
-      <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-      </svg>
-    ),
-    title: 'Factures professionnelles',
-    description:
-      'Créez une facture propre et complète en quelques touches : produits, réductions, livraison, reste à payer. PDF généré automatiquement.',
+    icon: '📄',
+    title: 'Image professionnelle',
+    description: 'Des factures propres et complètes qui inspirent confiance à vos clients. Plus de papier froissé.',
   },
   {
-    icon: (
-      <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-      </svg>
-    ),
-    title: 'Partage WhatsApp',
-    description:
-      'Envoyez la facture à votre client en un clic via WhatsApp. Le client reçoit le montant, le numéro de facture et le PDF.',
+    icon: '🧮',
+    title: 'Pas de calculs compliqués',
+    description: 'Kobo fait les maths pour vous. Marge, TVA, réductions… tout est calculé instantanément.',
+  },
+  {
+    icon: '📱',
+    title: '100% mobile',
+    description: 'Fonctionne parfaitement sur téléphone, même avec connexion 3G. Pas besoin d\'ordinateur.',
+  },
+  {
+    icon: '💰',
+    title: 'Prix en FCFA',
+    description: 'Tout est pensé pour l\'Afrique de l\'Ouest. Pas de conversion, pas de surprise. Des packs abordables.',
+  },
+  {
+    icon: '🔒',
+    title: 'Vos données sont safe',
+    description: 'Vos factures et informations clients sont sécurisées. Personne d\'autre n\'y a accès.',
   },
 ]
 
@@ -38,60 +38,77 @@ const steps = [
   {
     number: '1',
     title: 'Entrez vos coûts',
-    description: 'Prix d’achat, transport, emballage, publicité… Kobo additionne tout pour vous.',
+    description: 'Prix d\'achat, transport, emballage, publicité… Kobo additionne tout pour vous automatiquement.',
   },
   {
     number: '2',
     title: 'Obtenez votre prix',
-    description: 'Kobo calcule votre prix de vente conseillé avec le bénéfice que vous choisissez.',
+    description: 'Kobo calcule votre prix de vente conseillé avec le bénéfice que vous choisissez. Plus de devinettes.',
   },
   {
     number: '3',
     title: 'Facturez & partagez',
-    description: 'Créez la facture, envoyez-la sur WhatsApp. Le client paie, vous gardez la trace.',
+    description: 'Créez la facture professionnelle en quelques touches, envoyez-la sur WhatsApp. Le client paie, vous gardez la trace.',
   },
 ]
 
-const packs = [
+const testimonials = [
   {
-    name: 'Débutant',
-    price: '500',
-    credits: 5,
-    perCredit: '100 FCFA / facture',
-    featured: false,
+    name: 'Amina K.',
+    role: 'Vendeuse de vêtements, Lomé',
+    text: 'Avant Kobo, je passais 30 minutes à calculer mes prix de vente. Maintenant, c\'est instantané. Mes clients trouvent mes factures beaucoup plus professionnelles.',
+    initials: 'AK',
   },
   {
-    name: 'Standard',
-    price: '1 000',
-    credits: 15,
-    perCredit: '67 FCFA / facture',
-    featured: true,
+    name: 'Kofi M.',
+    role: 'Commerçant électronique, Cotonou',
+    text: 'Le partage WhatsApp a changé ma façon de travailler. J\'envoie la facture, le client paie, et j\'ai tout l\'historique. Fini les papiers perdus.',
+    initials: 'KM',
   },
   {
-    name: 'Pro',
-    price: '2 000',
-    credits: 50,
-    perCredit: '40 FCFA / facture',
-    featured: false,
+    name: 'Fatou A.',
+    role: 'Boutique cosmétiques, Ouagadougou',
+    text: 'J\'ai testé plusieurs outils mais Kobo est le seul qui soit vraiment adapté à nos réalités. Prix en FCFA, simple, rapide. Je recommande.',
+    initials: 'FA',
+  },
+]
+
+const faqs = [
+  {
+    question: 'C\'est gratuit ?',
+    answer: 'Le calculateur de prix est 100% gratuit et illimité. Pour créer des factures, vous achetez des packs de crédits (1 crédit = 1 facture). Les packs commencent à 500 FCFA pour 5 factures.',
+  },
+  {
+    question: 'Mes données sont-elles sécurisées ?',
+    answer: 'Absolument. Vos factures et informations sont stockées de manière sécurisée et seul vous y avez accès. Nous ne partageons jamais vos données avec des tiers.',
+  },
+  {
+    question: 'Comment payer les crédits ?',
+    answer: 'Vous pouvez payer par Mobile Money (Flooz, T-Money), carte bancaire ou virement. Les crédits sont ajoutés instantanément après confirmation du paiement.',
+  },
+  {
+    question: 'Faut-il un ordinateur ?',
+    answer: 'Non ! Kobo est optimisé pour le mobile et fonctionne parfaitement sur smartphone, même avec une connexion 3G. Vous pouvez tout faire depuis votre téléphone.',
+  },
+  {
+    question: 'Puis-je personnaliser mes factures ?',
+    answer: 'Oui, vous pouvez ajouter votre logo, vos coordonnées et personnaliser les informations de votre entreprise sur vos factures.',
   },
 ]
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
-      {/* ===== Header ===== */}
-      <header className="sticky top-0 z-40 border-b border-stone-200/70 bg-background/85 backdrop-blur-md">
+      {/* Header */}
+      <header className="sticky top-0 z-50 border-b border-secondary-200/70 bg-background/90 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <KoboLogo href="/" />
 
-          <nav className="hidden items-center md:flex">
-            <Link href="/calculateur" className="rounded-lg px-3 py-2 text-sm font-medium text-stone-600 hover:text-stone-900 hover:bg-stone-100">
+          <nav className="hidden items-center gap-4 md:flex">
+            <Link href="/calculateur" className="rounded-lg px-3 py-2 text-sm font-medium text-secondary-600 hover:text-secondary-900 hover:bg-secondary-100">
               Calculateur
             </Link>
-            <Link href="/register" className="rounded-lg px-3 py-2 text-sm font-medium text-stone-600 hover:text-stone-900 hover:bg-stone-100">
-              Facturation
-            </Link>
-            <Link href="/register" className="rounded-lg px-3 py-2 text-sm font-medium text-stone-600 hover:text-stone-900 hover:bg-stone-100">
+            <Link href="/register" className="rounded-lg px-3 py-2 text-sm font-medium text-secondary-600 hover:text-secondary-900 hover:bg-secondary-100">
               Tarifs
             </Link>
           </nav>
@@ -108,223 +125,224 @@ export default function Home() {
       </header>
 
       <main>
-        {/* ===== Hero ===== */}
-        <section className="mx-auto max-w-6xl px-4 pt-12 pb-16 sm:px-6 md:pt-20 md:pb-24">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <div>
-              <span className="badge badge-green mb-5">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                Conçu pour les petits commerçants
-              </span>
-              <h1 className="text-4xl font-bold tracking-tight text-stone-900 md:text-5xl">
-                Vendez au bon prix.{' '}
-                <span className="text-primary-600">Facturez en 2 minutes.</span>
-              </h1>
-              <p className="mt-5 max-w-lg text-lg leading-relaxed text-stone-600">
-                Kobo calcule vos prix de vente avec une vraie marge et génère des
-                factures professionnelles à partager sur WhatsApp. Simple, mobile,
-                sans jargon.
-              </p>
+        {/* Hero */}
+        <section className="relative overflow-hidden bg-gradient-to-br from-primary-500 via-accent-500 to-secondary-600 py-16 text-white md:py-24">
+          <div className="absolute -top-[50%] -right-[20%] h-[600px] w-[600px] rounded-full bg-white/10" />
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <div className="grid items-center gap-8 lg:grid-cols-2">
+              <div className="relative z-10">
+                <div className="mb-6 flex flex-wrap gap-2">
+                  <span className="badge bg-white/20 text-white backdrop-blur-sm">
+                    ✨ Conçu pour les commerçants africains
+                  </span>
+                </div>
+                <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+                  Vendez au bon prix.<br />
+                  <span className="text-accent-200">Facturez en 2 minutes.</span>
+                </h1>
+                <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/95 md:text-xl">
+                  Kobo calcule vos prix de vente avec une vraie marge et génère des factures professionnelles à partager sur WhatsApp. Simple, mobile, sans jargon.
+                </p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link href="/register" className="btn btn-primary btn-lg">
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                  <Link href="/register" className="btn btn-lg bg-white text-primary-600 hover:bg-primary-50">
+                    Créer mon compte gratuit
+                  </Link>
+                  <Link href="/calculateur" className="btn btn-lg border-2 border-white bg-white/10 text-white hover:bg-white/20">
+                    Essayer le calculateur
+                  </Link>
+                </div>
+
+                <p className="mt-4 text-sm text-white/80">
+                  Gratuit pour commencer · Sans carte bancaire · Montants en FCFA
+                </p>
+              </div>
+
+              {/* Hero Card */}
+              <div className="relative z-10">
+                <div className="card card-pad shadow-2xl">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-semibold text-foreground">Prix de vente conseillé</p>
+                    <span className="badge badge-green">Marge 30%</span>
+                  </div>
+                  <p className="mt-3 text-4xl font-bold tracking-tight text-primary-600">
+                    6 500 FCFA
+                  </p>
+                  <div className="mt-5 space-y-2.5 text-sm">
+                    <div className="flex justify-between text-secondary-600">
+                      <span>Coût total</span>
+                      <span className="font-medium text-foreground">5 000 FCFA</span>
+                    </div>
+                    <div className="flex justify-between text-secondary-600">
+                      <span>Votre bénéfice</span>
+                      <span className="font-medium text-success-600">+1 500 FCFA</span>
+                    </div>
+                  </div>
+                  <div className="mt-5 rounded-xl bg-success-50 p-3 text-sm">
+                    <div className="flex items-center justify-between text-secondary-700">
+                      <span className="font-medium">Facture n° FAC-2026-0001</span>
+                      <span className="badge badge-green">Payé ✓</span>
+                    </div>
+                    <div className="mt-2 flex items-center gap-2 text-xs text-secondary-600">
+                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-success-500 text-white text-xs">✓</span>
+                      Envoyée sur WhatsApp
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Comment ça marche */}
+        <section className="bg-white py-16 md:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+                Comment ça marche ?
+              </h2>
+              <p className="mt-4 text-lg text-secondary-600">
+                Du prix de vente à la facture envoyée, tout se fait en 3 étapes simples.
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-8 md:grid-cols-3">
+              {steps.map((step) => (
+                <div key={step.number} className="text-center">
+                  <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-primary-500 to-accent-500 text-2xl font-bold text-white">
+                    {step.number}
+                  </div>
+                  <h3 className="mt-4 text-xl font-semibold text-foreground">{step.title}</h3>
+                  <p className="mt-2 text-secondary-600">{step.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Bénéfices */}
+        <section className="bg-background py-16 md:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+                Pourquoi les commerçants adorent Kobo ?
+              </h2>
+              <p className="mt-4 text-lg text-secondary-600">
+                Des avantages concrets qui changent votre quotidien.
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-6 md:grid-cols-2">
+              {benefits.map((benefit) => (
+                <div key={benefit.title} className="card card-pad flex gap-4">
+                  <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-2xl">
+                    {benefit.icon}
+                  </span>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground">{benefit.title}</h3>
+                    <p className="mt-1 text-secondary-600">{benefit.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Témoignages */}
+        <section className="bg-white py-16 md:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+                Ce que disent nos utilisateurs
+              </h2>
+              <p className="mt-4 text-lg text-secondary-600">
+                Des commerçants comme vous qui utilisent Kobo au quotidien.
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              {testimonials.map((testimonial) => (
+                <div key={testimonial.name} className="card card-pad">
+                  <div className="mb-4 text-accent-500 text-xl">★★★★★</div>
+                  <p className="mb-6 italic text-foreground leading-relaxed">"{testimonial.text}"</p>
+                  <div className="flex items-center gap-3">
+                    <div className="grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-secondary-500 to-secondary-600 text-sm font-bold text-white">
+                      {testimonial.initials}
+                    </div>
+                    <div>
+                      <div className="font-semibold text-foreground">{testimonial.name}</div>
+                      <div className="text-sm text-secondary-600">{testimonial.role}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="bg-background py-16 md:py-20">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+                Questions fréquentes
+              </h2>
+              <p className="mt-4 text-lg text-secondary-600">
+                Tout ce que vous devez savoir avant de commencer.
+              </p>
+            </div>
+
+            <div className="mt-12 space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="card overflow-hidden">
+                  <div className="border-b border-secondary-200 px-6 py-4 font-semibold text-foreground">
+                    {faq.question}
+                  </div>
+                  <div className="px-6 py-4 text-secondary-600">
+                    {faq.answer}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="bg-background py-16 md:py-20">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6">
+            <div className="rounded-3xl bg-gradient-to-br from-secondary-600 to-secondary-700 px-8 py-16 text-center text-white md:px-12">
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+                Prêt à vendre au bon prix ?
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-lg text-white/90">
+                Rejoignez des centaines de commerçants qui fixent leurs prix avec confiance et facturent comme des pros.
+              </p>
+              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+                <Link href="/register" className="btn btn-lg bg-white text-secondary-700 hover:bg-secondary-50">
                   Créer mon compte gratuit
                 </Link>
-                <Link href="/calculateur" className="btn btn-secondary btn-lg">
+                <Link href="/calculateur" className="btn btn-lg border-2 border-white bg-white/10 text-white hover:bg-white/20">
                   Essayer le calculateur
                 </Link>
               </div>
-
-              <p className="mt-4 text-sm text-stone-500">
-                Gratuit pour commencer · Sans carte bancaire · Montants en FCFA
-              </p>
-            </div>
-
-            {/* Visuel hero */}
-            <div className="relative mx-auto w-full max-w-md">
-              <div className="card card-pad relative z-10 shadow-xl shadow-stone-900/5">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold text-stone-900">Prix de vente conseillé</p>
-                  <span className="badge badge-green">Marge 30%</span>
-                </div>
-                <p className="mt-3 text-4xl font-bold tracking-tight text-primary-600">
-                  6 500 FCFA
-                </p>
-                <div className="mt-5 space-y-2.5 text-sm">
-                  <div className="flex justify-between text-stone-500">
-                    <span>Coût total</span>
-                    <span className="font-medium text-stone-900">5 000 FCFA</span>
-                  </div>
-                  <div className="flex justify-between text-stone-500">
-                    <span>Votre bénéfice</span>
-                    <span className="font-medium text-emerald-600">+1 500 FCFA</span>
-                  </div>
-                </div>
-                <div className="mt-5 rounded-xl bg-stone-50 p-3 text-sm">
-                  <div className="flex items-center justify-between text-stone-600">
-                    <span className="font-medium">Facture n° FAC-2026-0001</span>
-                    <span className="badge badge-green">Payé ✓</span>
-                  </div>
-                  <div className="mt-2 flex items-center gap-2 text-xs text-stone-500">
-                    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-green-500 text-white">✓</span>
-                    Envoyée sur WhatsApp
-                  </div>
-                </div>
-              </div>
-
-              <div className="absolute -bottom-6 -left-6 z-0 hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-lg sm:block">
-                <div className="flex items-center gap-3">
-                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
-                    <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </span>
-                  <div>
-                    <p className="text-sm font-semibold text-stone-900">Moins de 2 minutes</p>
-                    <p className="text-xs text-stone-500">du calcul au partage</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ===== Fonctionnalités ===== */}
-        <section className="border-t border-stone-200/70 bg-white py-16 md:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-stone-900">
-                Tout ce qu’il faut pour vendre, rien de superflu
-              </h2>
-              <p className="mt-3 text-lg text-stone-600">
-                Pas de tableaux compliqués. Trois outils simples, pensés pour un usage sur téléphone.
-              </p>
-            </div>
-
-            <div className="mt-12 grid gap-6 md:grid-cols-3">
-              {features.map((feature) => (
-                <div key={feature.title} className="card card-pad hover:shadow-md hover:shadow-stone-900/5 transition-shadow">
-                  <span className="grid h-12 w-12 place-items-center rounded-xl bg-emerald-50 text-primary-600">
-                    {feature.icon}
-                  </span>
-                  <h3 className="mt-5 text-lg font-semibold text-stone-900">{feature.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-stone-600">{feature.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ===== Comment ça marche ===== */}
-        <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-20">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-stone-900">
-              Comment ça marche ?
-            </h2>
-            <p className="mt-3 text-lg text-stone-600">
-              Du prix de vente à la facture envoyée, tout se fait en 3 étapes.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
-            {steps.map((step) => (
-              <div key={step.number} className="relative">
-                <div className="flex items-center gap-4">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary-600 text-base font-bold text-white">
-                    {step.number}
-                  </span>
-                  <h3 className="text-lg font-semibold text-stone-900">{step.title}</h3>
-                </div>
-                <p className="mt-3 pl-14 text-sm leading-relaxed text-stone-600">{step.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ===== Tarifs ===== */}
-        <section className="border-t border-stone-200/70 bg-white py-16 md:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-stone-900">
-                Des tarifs simples, en FCFA
-              </h2>
-              <p className="mt-3 text-lg text-stone-600">
-                1 crédit = 1 facture générée. Aucun abonnement, vous payez ce que vous utilisez.
-              </p>
-            </div>
-
-            <div className="mt-12 grid gap-6 md:grid-cols-3">
-              {packs.map((pack) => (
-                <div
-                  key={pack.name}
-                  className={`card card-pad relative flex flex-col ${
-                    pack.featured ? 'border-primary-300 ring-2 ring-primary-500/20' : ''
-                  }`}
-                >
-                  {pack.featured && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 badge badge-green">
-                      Le plus choisi
-                    </span>
-                  )}
-                  <h3 className="text-base font-semibold text-stone-900">{pack.name}</h3>
-                  <div className="mt-3 flex items-baseline gap-1">
-                    <span className="text-3xl font-bold tracking-tight text-stone-900">
-                      {pack.price}
-                    </span>
-                    <span className="text-sm font-medium text-stone-500">FCFA</span>
-                  </div>
-                  <p className="mt-1 text-sm text-stone-500">{pack.credits} crédits · {pack.perCredit}</p>
-                  <div className="mt-5">
-                    <Link
-                      href="/register"
-                      className={`btn w-full ${pack.featured ? 'btn-primary' : 'btn-secondary'}`}
-                    >
-                      Commencer
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ===== CTA final ===== */}
-        <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6 md:pb-24">
-          <div className="rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-700 px-6 py-14 text-center text-white md:px-12">
-            <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight md:text-4xl">
-              Prêt à vendre au bon prix ?
-            </h2>
-            <p className="mx-auto mt-3 max-w-xl text-lg text-emerald-50/90">
-              Rejoignez des centaines de commerçants qui fixent leurs prix avec confiance et facturent comme des pros.
-            </p>
-            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <Link href="/register" className="btn btn-lg bg-white text-emerald-700 hover:bg-emerald-50">
-                Créer mon compte gratuit
-              </Link>
-              <Link
-                href="/calculateur"
-                className="btn btn-lg border border-white/30 text-white hover:bg-white/10"
-              >
-                Essayer le calculateur
-              </Link>
             </div>
           </div>
         </section>
       </main>
 
-      {/* ===== Footer ===== */}
-      <footer className="border-t border-stone-200/70 bg-white">
+      {/* Footer */}
+      <footer className="border-t border-secondary-200/70 bg-white">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 sm:flex-row sm:px-6">
           <KoboLogo />
-          <p className="text-sm text-stone-500">
+          <p className="text-sm text-secondary-600">
             © {new Date().getFullYear()} Kobo — Calcul de prix & facturation pour commerçants
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-stone-500">
-            <Link href="/calculateur" className="hover:text-stone-900">Calculateur</Link>
-            <Link href="/login" className="hover:text-stone-900">Connexion</Link>
-            <Link href="/register" className="hover:text-stone-900">Inscription</Link>
-            <Link href="/terms" className="hover:text-stone-900">CGU</Link>
-            <Link href="/privacy" className="hover:text-stone-900">Confidentialité</Link>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-secondary-600">
+            <Link href="/calculateur" className="hover:text-foreground">Calculateur</Link>
+            <Link href="/login" className="hover:text-foreground">Connexion</Link>
+            <Link href="/register" className="hover:text-foreground">Inscription</Link>
+            <Link href="/terms" className="hover:text-foreground">CGU</Link>
+            <Link href="/privacy" className="hover:text-foreground">Confidentialité</Link>
           </div>
         </div>
       </footer>
