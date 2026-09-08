@@ -15,7 +15,8 @@
     "db:dev": "prisma db push",
     "db:migrate": "prisma migrate dev --schema prisma/schema.postgres.prisma",
     "db:deploy": "prisma migrate deploy --schema prisma/schema.postgres.prisma",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "vercel-build": "prisma generate && next build"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.3",
