@@ -6,7 +6,7 @@
 const API_BASE = 'https://facomptkobo.vercel.app'
 
 async function testRegistration() {
-  console.log('\n📝 Test 1: Inscription avec 3 crédits gratuits')
+  console.log('\n📝 Test 3: Inscription avec 3 crédits gratuits')
   console.log('='.repeat(50))
 
   const testEmail = `test.kobo.e2e.${Date.now()}@gmail.com`
@@ -50,7 +50,7 @@ async function testRegistration() {
 }
 
 async function testLogin(email: string, password: string) {
-  console.log('\n🔐 Test 2: Connexion')
+  console.log('\n🔐 Test 4: Connexion')
   console.log('='.repeat(50))
 
   try {
@@ -83,7 +83,7 @@ async function testLogin(email: string, password: string) {
 }
 
 async function testCreditPacks() {
-  console.log('\n📦 Test 4: Vérification packs de crédits')
+  console.log('\n📦 Test 2: Vérification packs de crédits')
   console.log('='.repeat(50))
 
   try {
