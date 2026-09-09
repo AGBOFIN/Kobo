@@ -32,9 +32,13 @@ export async function PATCH(request: NextRequest) {
       )
     }
 
+    // Sécurité : s'assurer que le rôle ne peut jamais être modifié via cette API
+    // Même si quelqu'un manipule la requête, le champ role sera explicitement ignoré
+    const { role, ...safeData } = validatedFields.data as any
+
     const user = await prisma.user.update({
       where: { id: session.user.id },
-      data: validatedFields.data,
+      data: safeData, // Ne contient jamais le champ role
       select: {
         id: true,
         name: true,

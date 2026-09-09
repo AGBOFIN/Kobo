@@ -36,12 +36,14 @@ export async function POST(request: NextRequest) {
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
+    // Sécurité : forcer le rôle à USER - aucune élévation de privilège possible
+    // Même si quelqu'un injecte un champ 'role' dans la requête, il sera ignoré
     const user = await prisma.user.create({
       data: {
         name,
         email,
         passwordHash: hashedPassword,
-        role: 'USER',
+        role: 'USER', // Toujours USER, jamais ADMIN - sécurité critique
         active: true,
       },
       select: {
