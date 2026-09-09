@@ -1,15 +1,24 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/db/prisma'
-
 /**
- * ENDPOINT TEMPORAIRE - À SUPPRIMER APRÈS UTILISATION
- * Met à jour les packs de crédits sans authentification
- * Utilisé uniquement pour le déploiement production initial
+ * Script pour mettre à jour les packs de crédits en production
+ * À exécuter manuellement après le déploiement
+ * Utilise DIRECT_URL pour la connexion directe à PostgreSQL
  */
-export async function POST(request: NextRequest) {
-  try {
-    console.log('🔄 Mise à jour des packs de crédits...')
 
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DIRECT_URL || process.env.DATABASE_URL,
+    },
+  },
+})
+
+async function main() {
+  console.log('🔄 Mise à jour des packs de crédits en production...')
+  console.log('='.repeat(50))
+
+  try {
     // Mettre à jour le pack Débutant → Découverte
     const pack1 = await prisma.creditPack.updateMany({
       where: { name: 'Pack Débutant' },
@@ -41,22 +50,24 @@ export async function POST(request: NextRequest) {
     })
     console.log(`✅ Pack Pro mis à jour: ${pack3.count} row(s)`)
 
-    // Récupérer les packs mis à jour
+    // Vérifier les packs après mise à jour
     const packs = await prisma.creditPack.findMany({
       where: { active: true },
       orderBy: { price: 'asc' },
     })
 
-    return NextResponse.json({
-      success: true,
-      message: 'Packs mis à jour avec succès',
-      packs,
-    })
+    console.log('\n📦 Packs après mise à jour:')
+    for (const pack of packs) {
+      console.log(`  - ${pack.name}: ${pack.price} FCFA / ${pack.creditsCount} crédits`)
+    }
+
+    console.log('\n✅ Mise à jour terminée avec succès')
   } catch (error) {
-    console.error('❌ Erreur mise à jour packs:', error)
-    return NextResponse.json(
-      { error: 'Erreur lors de la mise à jour des packs', details: String(error) },
-      { status: 500 }
-    )
+    console.error('\n❌ Erreur:', error)
+    process.exit(1)
+  } finally {
+    await prisma.$disconnect()
   }
 }
+
+main()
