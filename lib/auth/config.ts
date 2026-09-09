@@ -42,19 +42,6 @@ export const authConfig: NextAuthConfig = {
       },
     },
   },
-  // Configuration explicite des cookies pour NextAuth v5
-  // Important pour la compatibilite avec le middleware
-  cookies: {
-    sessionToken: {
-      name: `authjs.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-      },
-    },
-  },
   providers: [
     Credentials({
       credentials: {
