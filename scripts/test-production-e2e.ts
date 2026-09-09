@@ -30,7 +30,15 @@ async function testRegistration() {
       console.log('✅ Inscription réussie')
       console.log(`📧 Email de test: ${testEmail}`)
       console.log(`🔑 Mot de passe: ${testPassword}`)
-      return { success: true, email: testEmail, password: testPassword, userId: data.user.id }
+      console.log(`💰 Crédits reçus: ${data.credits ?? 'non retourné'}`)
+      
+      if (data.credits === 3) {
+        console.log('✅ Les 3 crédits gratuits ont bien été attribués')
+        return { success: true, email: testEmail, password: testPassword, userId: data.user.id, credits: data.credits }
+      } else {
+        console.log(`⚠️  Attendu: 3 crédits, Réel: ${data.credits ?? 0} crédits`)
+        return { success: true, email: testEmail, password: testPassword, userId: data.user.id, credits: data.credits, warning: 'Solde incorrect' }
+      }
     } else {
       console.log('❌ Inscription échouée:', data.error)
       return { success: false, error: data.error }
@@ -67,34 +75,6 @@ async function testLogin(email: string, password: string) {
     } else {
       console.log('❌ Connexion échouée')
       return { success: false, error: text }
-    }
-  } catch (error) {
-    console.log('❌ Erreur réseau:', error)
-    return { success: false, error: String(error) }
-  }
-}
-
-async function testCreditBalance(email: string) {
-  console.log('\n💰 Test 3: Vérification solde crédits')
-  console.log('='.repeat(50))
-
-  try {
-    const response = await fetch(`${API_BASE}/api/test/check-balance?email=${encodeURIComponent(email)}`)
-    const data = await response.json()
-    console.log('Réponse:', JSON.stringify(data, null, 2))
-
-    if (response.ok) {
-      console.log(`✅ Solde actuel: ${data.balance} crédits`)
-      if (data.balance === 3) {
-        console.log('✅ Les 3 crédits gratuits ont bien été attribués')
-        return { success: true, balance: data.balance }
-      } else {
-        console.log(`⚠️  Attendu: 3 crédits, Réel: ${data.balance} crédits`)
-        return { success: false, error: `Solde incorrect: ${data.balance} au lieu de 3` }
-      }
-    } else {
-      console.log('❌ Impossible de récupérer le solde')
-      return { success: false, error: data.error }
     }
   } catch (error) {
     console.log('❌ Erreur réseau:', error)
@@ -164,11 +144,15 @@ async function main() {
   results.registration = registration
 
   if (registration.success) {
+    // Vérifier les crédits dès l'inscription
+    if (registration.credits === 3) {
+      results.creditBalance = { success: true, balance: registration.credits }
+    } else {
+      results.creditBalance = { success: false, error: `Solde incorrect: ${registration.credits ?? 0} au lieu de 3` }
+    }
+
     // Test 3: Connexion
     results.login = await testLogin(registration.email, registration.password)
-
-    // Test 4: Solde crédits
-    results.creditBalance = await testCreditBalance(registration.email)
   }
 
   // Résumé
@@ -177,10 +161,10 @@ async function main() {
   console.log('='.repeat(50))
   console.log(`Packs de crédits: ${results.packs.success ? '✅' : '❌'}`)
   console.log(`Inscription: ${results.registration.success ? '✅' : '❌'}`)
+  console.log(`Crédits gratuits: ${results.creditBalance?.success ? '✅' : '❌'}`)
   console.log(`Connexion: ${results.login?.success ? '✅' : '❌'}`)
-  console.log(`Solde crédits: ${results.creditBalance?.success ? '✅' : '❌'}`)
 
-  const allPassed = results.packs.success && results.registration.success && results.login?.success && results.creditBalance?.success
+  const allPassed = results.packs.success && results.registration.success && results.creditBalance?.success && results.login?.success
 
   if (allPassed) {
     console.log('\n🎉 TOUS LES TESTS SONT PASSÉS')

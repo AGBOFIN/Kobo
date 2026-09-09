@@ -89,8 +89,17 @@ export async function POST(request: NextRequest) {
 
     console.log('🎁 3 free credits offered to user:', user.id)
 
+    // Récupérer le solde pour le retourner dans la réponse
+    const creditBalance = await prisma.creditBalance.findUnique({
+      where: { userId: user.id },
+    })
+
     return NextResponse.json(
-      { message: 'Compte créé avec succès', user },
+      { 
+        message: 'Compte créé avec succès', 
+        user,
+        credits: creditBalance?.balanceCredits ?? 0,
+      },
       { status: 201 }
     )
   } catch (error) {
