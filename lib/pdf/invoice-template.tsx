@@ -13,6 +13,8 @@ interface InvoiceTemplateProps {
     date: Date
     clientName: string
     clientPhone: string
+    clientEmail?: string
+    clientAddress?: string
     items: Array<{
       designation: string
       quantity: number
@@ -27,6 +29,7 @@ interface InvoiceTemplateProps {
     remainingAmount: number
     status: string
     paymentMode?: string
+    dueDate?: Date
   }
   seller: {
     name: string
@@ -34,17 +37,18 @@ interface InvoiceTemplateProps {
     address?: string
     companyName?: string
     logoUrl?: string
+    email?: string
   }
 }
 
-// Palette Kobo - Afro-Modernité
-const PRIMARY = '#ea580c'
-const PRIMARY_DARK = '#7c2d12'
-const SECONDARY = '#2c3e50'
-const MUTED = '#64748b'
-const LINE = '#e2e8f0'
-const ACCENT = '#059669'
-const INK = '#1c1917'
+// Palette Kobo - Bold African Modern
+const PRIMARY = '#2d5a27' // Vert profond - nature africaine
+const PRIMARY_DARK = '#1d3a19' // Vert plus foncé
+const SECONDARY = '#d4a017' // Ocre jaune - terre, sable
+const MUTED = '#643c0b' // Ocre foncé
+const LINE = '#e0ebe0' // Vert très clair
+const ACCENT = '#c41e3a' // Rouge terre - vitalité
+const INK = '#1a1a1a' // Noir doux
 
 function statusLabel(status: string): string {
   if (status === 'PAYE') return 'Payé'
@@ -283,6 +287,11 @@ export function InvoiceTemplate({ invoice, seller }: InvoiceTemplateProps) {
             <Text style={styles.meta}>
               Date : {new Date(invoice.date).toLocaleDateString('fr-FR')}
             </Text>
+            {invoice.dueDate && (
+              <Text style={styles.meta}>
+                Échéance : {new Date(invoice.dueDate).toLocaleDateString('fr-FR')}
+              </Text>
+            )}
           </View>
         </View>
 
@@ -297,15 +306,25 @@ export function InvoiceTemplate({ invoice, seller }: InvoiceTemplateProps) {
               />
             ) : null}
             <Text style={styles.partyName}>{seller.companyName || seller.name}</Text>
+            {seller.name && seller.companyName ? (
+              <Text style={styles.partyLine}>{seller.name}</Text>
+            ) : null}
             {seller.address ? (
               <Text style={styles.partyLine}>{seller.address}</Text>
             ) : null}
             {seller.phone ? <Text style={styles.partyLine}>Tél : {seller.phone}</Text> : null}
+            {seller.email ? <Text style={styles.partyLine}>Email : {seller.email}</Text> : null}
           </View>
           <View style={[styles.block, { alignItems: 'flex-end' }]}>
             <Text style={styles.blockTitle}>Facturé à</Text>
             <Text style={styles.partyName}>{invoice.clientName}</Text>
             <Text style={styles.partyLine}>Tél : {invoice.clientPhone}</Text>
+            {invoice.clientEmail ? (
+              <Text style={styles.partyLine}>Email : {invoice.clientEmail}</Text>
+            ) : null}
+            {invoice.clientAddress ? (
+              <Text style={styles.partyLine}>{invoice.clientAddress}</Text>
+            ) : null}
           </View>
         </View>
 

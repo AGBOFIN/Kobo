@@ -102,7 +102,10 @@ model Invoice {
   invoiceNumber     String
   clientName        String
   clientPhone       String
+  clientEmail       String?
+  clientAddress     String?
   date              DateTime      @default(now())
+  dueDate           DateTime?
   subtotal          Int
   discount          Int           @default(0)
   discountPercent   Float?

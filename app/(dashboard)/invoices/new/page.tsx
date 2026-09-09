@@ -97,7 +97,7 @@ export default function NewInvoicePage() {
 
   return (
     <div className="mx-auto max-w-7xl">
-      <div className="mb-6 md:mb-8 flex items-center justify-between">
+      <div className="mb-6 md:mb-8">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
             Nouvelle facture
@@ -105,10 +105,6 @@ export default function NewInvoicePage() {
           <p className="mt-1 text-secondary-600">
             Remplissez les informations, la facture PDF est générée automatiquement.
           </p>
-        </div>
-        <div className="badge badge-green">
-          <span className="h-1.5 w-1.5 rounded-full bg-success-500" />
-          12 crédits restants
         </div>
       </div>
 

@@ -7,6 +7,8 @@ interface GenerateInvoicePDFParams {
     date: Date
     clientName: string
     clientPhone: string
+    clientEmail?: string
+    clientAddress?: string
     items: Array<{
       designation: string
       quantity: number
@@ -21,6 +23,7 @@ interface GenerateInvoicePDFParams {
     remainingAmount: number
     status: string
     paymentMode?: string
+    dueDate?: Date
   }
   seller: {
     name: string
@@ -28,6 +31,7 @@ interface GenerateInvoicePDFParams {
     address?: string
     companyName?: string
     logoUrl?: string
+    email?: string
   }
 }
 

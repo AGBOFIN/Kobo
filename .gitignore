@@ -49,6 +49,10 @@ dev-server.log
 # Stockage local des fichiers générés (PDF)
 /storage/
 
+# Prisma database files
+prisma/prisma/*.db
+prisma/prisma/*.db-journal
+
 # IDE et outils
 .agents/
 .claude/
