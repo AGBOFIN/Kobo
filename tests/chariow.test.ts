@@ -60,7 +60,7 @@ describe('Chariow — vérification de signature webhook (Pulse)', () => {
     sale: {
       id: 'sal_xyz789abc',
       status: 'completed',
-      amount: { value: 500, currency: 'XOF' },
+      amount: { value: 1500, currency: 'XOF' },
       custom_metadata: { kobo_user_id: 'user_1', kobo_pack_id: 'pack_1' },
     },
     customer: { email: 'awa@kobo.test' },
@@ -74,7 +74,7 @@ describe('Chariow — vérification de signature webhook (Pulse)', () => {
   })
 
   it('rejette un corps modifié (tampering)', () => {
-    const tampered = payload.replace('500', '999999')
+    const tampered = payload.replace('1500', '999999')
     expect(verifyChariowWebhookSignature(payload, sign(tampered, secret), secret)).toBe(false)
   })
 
@@ -229,18 +229,18 @@ describe('ChariowProvider — mapping des événements Pulse', () => {
  */
 describe('Déduplication des crédits (invariants de schéma)', () => {
   const PACKS = [
-    { id: 'cmtpo381s0000797fsj1qtvru', price: 500, credits: 5 },
-    { id: 'cmtpo381s0001797ftorq9ngj', price: 1000, credits: 15 },
-    { id: 'cmtpo381s0002797frrn90ewb', price: 2000, credits: 50 },
+    { id: 'cmtpo381s0000797fsj1qtvru', price: 1500, credits: 15 },
+    { id: 'cmtpo381s0001797ftorq9ngj', price: 5000, credits: 60 },
+    { id: 'cmtpo381s0002797frrn90ewb', price: 10000, credits: 150 },
   ]
 
   const priceToCredits = (price: number) =>
     PACKS.find(p => p.price === price)?.credits ?? 0
 
   it('chaque prix de pack correspond à un nombre de crédits connu', () => {
-    expect(priceToCredits(500)).toBe(5)
-    expect(priceToCredits(1000)).toBe(15)
-    expect(priceToCredits(2000)).toBe(50)
+    expect(priceToCredits(1500)).toBe(15)
+    expect(priceToCredits(5000)).toBe(60)
+    expect(priceToCredits(10000)).toBe(150)
     expect(priceToCredits(9999)).toBe(0) // prix inconnu → jamais crédité
   })
 

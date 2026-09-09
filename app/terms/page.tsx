@@ -114,9 +114,9 @@ export default function TermsPage() {
               <li>
                 Les crédits sont vendus par packs :
                 <ul className="mt-1 list-[circle] space-y-1 pl-5">
-                  <li>500 FCFA → 5 crédits</li>
-                  <li>1 000 FCFA → 15 crédits</li>
-                  <li>2 000 FCFA → 50 crédits</li>
+                  <li>1 500 FCFA → 15 crédits</li>
+                  <li>5 000 FCFA → 60 crédits</li>
+                  <li>10 000 FCFA → 150 crédits</li>
                 </ul>
               </li>
               <li>

@@ -68,6 +68,27 @@ export async function POST(request: NextRequest) {
 
     console.log('💰 Credit balance created for user:', user.id)
 
+    // Offrir 3 crédits gratuits à l'inscription
+    await prisma.creditBalance.update({
+      where: { userId: user.id },
+      data: { balanceCredits: { increment: 3 } },
+    })
+
+    // Enregistrer l'offre gratuite dans l'historique
+    await prisma.creditPurchase.create({
+      data: {
+        userId: user.id,
+        amount: 0,
+        creditsPurchased: 3,
+        status: 'CONFIRME',
+        provider: 'FREE_TIER',
+        source: 'FREE_TIER',
+        transactionRef: `signup-${user.id}`,
+      },
+    })
+
+    console.log('🎁 3 free credits offered to user:', user.id)
+
     return NextResponse.json(
       { message: 'Compte créé avec succès', user },
       { status: 201 }

@@ -77,7 +77,7 @@ const testimonials = [
 const faqs = [
   {
     question: 'C\'est gratuit ?',
-    answer: 'Le calculateur de prix est 100% gratuit et illimité. Pour créer des factures, vous achetez des packs de crédits (1 crédit = 1 facture). Les packs commencent à 500 FCFA pour 5 factures.',
+    answer: 'Le calculateur de prix est 100% gratuit et illimité. Pour créer des factures, vous achetez des packs de crédits (1 crédit = 1 facture). Les packs commencent à 1 500 FCFA pour 15 factures.',
   },
   {
     question: 'Mes données sont-elles sécurisées ?',
