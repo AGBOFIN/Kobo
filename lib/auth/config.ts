@@ -29,18 +29,6 @@ export const authConfig: NextAuthConfig = {
     signIn: '/login',
     error: '/error',
   },
-  // Configuration explicite des cookies pour NextAuth v5
-  cookies: {
-    sessionToken: {
-      name: `authjs.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-      },
-    },
-  },
   providers: [
     Credentials({
       credentials: {
