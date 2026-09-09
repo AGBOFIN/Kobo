@@ -15,6 +15,7 @@
     "seed": "tsx prisma/seed.ts",
     "create-admin": "tsx scripts/create-admin.ts",
     "reset-admin-password": "tsx scripts/reset-admin-password.ts",
+    "migrate:prod": "tsx scripts/apply-migration-prod.ts",
     "db:dev": "prisma db push",
     "db:migrate": "prisma migrate dev --schema prisma/schema.postgres.prisma",
     "db:deploy": "prisma migrate deploy --schema prisma/schema.postgres.prisma",

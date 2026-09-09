@@ -23,11 +23,14 @@ export async function POST(request: NextRequest) {
 
     const { name, email, password } = validatedFields.data
 
+    console.log('📝 Registration attempt:', { email, name })
+
     const existingUser = await prisma.user.findUnique({
       where: { email },
     })
 
     if (existingUser) {
+      console.log('⚠️  Email already exists:', email)
       return NextResponse.json(
         { error: 'Cet email est déjà utilisé' },
         { status: 400 }
@@ -35,6 +38,7 @@ export async function POST(request: NextRequest) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
+    console.log('🔐 Password hashed successfully')
 
     // Sécurité : forcer le rôle à USER - aucune élévation de privilège possible
     // Même si quelqu'un injecte un champ 'role' dans la requête, il sera ignoré
@@ -53,6 +57,8 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    console.log('✅ User created:', { id: user.id, email: user.email })
+
     await prisma.creditBalance.create({
       data: {
         userId: user.id,
@@ -60,12 +66,14 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    console.log('💰 Credit balance created for user:', user.id)
+
     return NextResponse.json(
       { message: 'Compte créé avec succès', user },
       { status: 201 }
     )
   } catch (error) {
-    console.error('Registration error:', error)
+    console.error('❌ Registration error:', error)
     
     // Messages d'erreur plus spécifiques selon le type d'erreur
     if (error instanceof Error) {
@@ -86,6 +94,13 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
           { error: 'Cet email est déjà utilisé. Essayez de vous connecter à la place.' },
           { status: 400 }
+        )
+      }
+      
+      if (error.message.includes('foreign key constraint') || error.message.includes('CreditBalance')) {
+        return NextResponse.json(
+          { error: 'Erreur lors de la création du compte. Veuillez contacter le support.' },
+          { status: 500 }
         )
       }
     }
