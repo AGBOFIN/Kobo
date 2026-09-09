@@ -69,7 +69,7 @@ export function PWAInstallPrompt() {
       <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 z-50">
         <div className="card card-pad shadow-lg border-primary-300">
           <div className="flex items-start gap-3">
-            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white">
+            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white">
               <Smartphone className="h-5 w-5" />
             </div>
             <div className="flex-1">
@@ -95,7 +95,7 @@ export function PWAInstallPrompt() {
     <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 z-50">
       <div className="card card-pad shadow-lg border-primary-300">
         <div className="flex items-start gap-3">
-          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white">
+          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white">
             <Download className="h-5 w-5" />
           </div>
           <div className="flex-1">

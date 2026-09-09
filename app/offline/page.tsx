@@ -5,7 +5,7 @@ export default function OfflinePage() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="card card-pad max-w-md w-full text-center">
-        <div className="grid h-20 w-20 mx-auto mb-6 place-items-center rounded-full bg-gradient-to-br from-primary-500 to-accent-500 text-white">
+        <div className="grid h-20 w-20 mx-auto mb-6 place-items-center rounded-full bg-gradient-to-br from-primary-500 to-primary-600 text-white">
           <Smartphone className="h-10 w-10" />
         </div>
         <h1 className="text-2xl font-bold text-foreground mb-3">

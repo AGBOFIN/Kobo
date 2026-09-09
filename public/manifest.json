@@ -4,8 +4,8 @@
   "description": "Calculez vos prix de vente et générez des factures professionnelles en moins de 2 minutes. Conçu pour les commerçants africains.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#FFFBF5",
-  "theme_color": "#FF6B35",
+  "background_color": "#faf9f6",
+  "theme_color": "#2d5a27",
   "orientation": "portrait-primary",
   "scope": "/",
   "icons": [

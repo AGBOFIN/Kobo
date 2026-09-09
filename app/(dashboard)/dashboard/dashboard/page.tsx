@@ -73,7 +73,7 @@ export default async function DashboardPage() {
       <div className="mb-6 sm:hidden">
         <Link
           href="/dashboard/credits"
-          className="flex items-center justify-between rounded-2xl bg-gradient-to-br from-primary-600 to-primary-700 p-5 text-white shadow-md shadow-primary-600/20"
+          className="flex items-center justify-between rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 p-5 text-white shadow-md shadow-primary-500/20"
         >
           <div>
             <p className="text-sm text-primary-50/90">Votre solde</p>
@@ -91,7 +91,7 @@ export default async function DashboardPage() {
       <div className="grid gap-4 md:grid-cols-2">
         <Link
           href="/invoices/new"
-          className="group flex items-center justify-between rounded-2xl bg-primary-600 p-6 text-white shadow-md shadow-primary-600/25 transition-all hover:bg-primary-700 hover:shadow-lg active:scale-[0.99]"
+          className="group flex items-center justify-between rounded-2xl bg-primary-500 p-6 text-white shadow-md shadow-primary-500/25 transition-all hover:bg-primary-600 hover:shadow-lg active:scale-[0.99]"
         >
           <div>
             <p className="text-lg font-semibold">Nouvelle facture</p>

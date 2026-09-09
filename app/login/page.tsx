@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { signIn, getSession } from 'next-auth/react'
+import { signIn } from '@/lib/auth/auth'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
@@ -28,16 +28,15 @@ export default function LoginPage() {
 
       if (result?.error) {
         setError('Email ou mot de passe incorrect')
-        // Le message s'affiche en haut du formulaire : on y ramène l'œil,
-        // sinon l'utilisateur reste en bas sur le bouton et ne voit RIEN.
         window.scrollTo({ top: 0, behavior: 'smooth' })
       } else {
         // Redirection selon le rôle : un administrateur arrive directement
         // dans son espace, un commerçant dans son tableau de bord.
-        const session = await getSession()
-        router.push(
-          session?.user?.role === 'ADMIN' ? '/admin' : '/dashboard/dashboard'
-        )
+        if (result.user?.role === 'ADMIN') {
+          router.push('/admin')
+        } else {
+          router.push('/dashboard/dashboard')
+        }
         router.refresh()
       }
     } catch (error) {

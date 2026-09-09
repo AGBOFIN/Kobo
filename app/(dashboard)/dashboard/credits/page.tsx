@@ -94,7 +94,7 @@ export default function CreditsPage() {
       </div>
 
       {/* ===== Solde ===== */}
-      <div className="mb-8 flex items-center justify-between rounded-2xl bg-gradient-to-br from-primary-600 to-primary-700 p-6 text-white shadow-md shadow-primary-600/20">
+      <div className="mb-8 flex items-center justify-between rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 p-6 text-white shadow-md shadow-primary-500/20">
         <div>
           <p className="text-sm text-primary-50/90">Votre solde actuel</p>
           <p className="mt-1 text-3xl font-bold">

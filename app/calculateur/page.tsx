@@ -81,7 +81,7 @@ export default function CalculateurPage() {
 function PricingResult({ result }: { result: PricingCalculationResult }) {
   return (
     <div className="card card-pad overflow-hidden">
-      <div className="rounded-2xl bg-gradient-to-br from-primary-600 to-primary-700 p-5 text-white shadow-md shadow-primary-600/20">
+      <div className="rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 p-5 text-white shadow-md shadow-primary-500/20">
         <p className="text-sm text-primary-50/90">
           {result.productName || 'Votre produit'} — Prix de vente conseillé
         </p>

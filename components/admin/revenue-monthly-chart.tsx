@@ -26,7 +26,7 @@ export function RevenueMonthlyChart({ data }: { data: MonthPoint[] }) {
               <div
                 className={`w-full rounded-t-lg transition-all ${
                   point.revenue > 0
-                    ? 'bg-gradient-to-t from-primary-600 to-emerald-400'
+                    ? 'bg-gradient-to-t from-primary-600 to-primary-400'
                     : 'bg-stone-100'
                 }`}
                 style={{ height: `${Math.max(heightPct, 4)}%` }}

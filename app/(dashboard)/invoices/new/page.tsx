@@ -36,7 +36,7 @@ export default function NewInvoicePage() {
     const newItems = [...items]
     newItems[index] = {
       ...newItems[index],
-      [field]: field === 'designation' ? value : (typeof value === 'string' ? parseFloat(value) || 0 : value),
+      [field]: field === 'designation' ? value : (typeof value === 'string' ? (value === '' ? 0 : parseFloat(value) || 0) : value),
     }
     setItems(newItems)
   }
@@ -124,7 +124,7 @@ export default function NewInvoicePage() {
         {/* ===== Client ===== */}
         <section className="card card-pad">
           <div className="mb-5 flex items-center gap-3">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white">
+            <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white">
               <User className="h-5 w-5" />
             </span>
             <h2 className="text-lg font-semibold text-foreground">Informations client</h2>
@@ -191,7 +191,7 @@ export default function NewInvoicePage() {
         <section className="card card-pad">
           <div className="mb-5 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white">
+              <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white">
                 <Package className="h-5 w-5" />
               </span>
               <h2 className="text-lg font-semibold text-foreground">Produits</h2>
@@ -224,10 +224,11 @@ export default function NewInvoicePage() {
                     <label className="label">Qté</label>
                     <input
                       type="number"
-                      value={item.quantity}
+                      value={item.quantity || ''}
                       onChange={(e) => updateItem(index, 'quantity', e.target.value)}
                       className="input text-right"
                       min="1"
+                      inputMode="numeric"
                       required
                     />
                   </div>
@@ -235,10 +236,11 @@ export default function NewInvoicePage() {
                     <label className="label">P.U. (FCFA)</label>
                     <input
                       type="number"
-                      value={item.unitPrice}
+                      value={item.unitPrice || ''}
                       onChange={(e) => updateItem(index, 'unitPrice', e.target.value)}
                       className="input text-right"
                       min="0"
+                      inputMode="numeric"
                       required
                     />
                   </div>
@@ -269,7 +271,7 @@ export default function NewInvoicePage() {
         {/* ===== Paiement ===== */}
         <section className="card card-pad">
           <div className="mb-5 flex items-center gap-3">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white">
+            <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white">
               <CreditCard className="h-5 w-5" />
             </span>
             <h2 className="text-lg font-semibold text-foreground">Détails de paiement</h2>
@@ -283,10 +285,12 @@ export default function NewInvoicePage() {
               <input
                 type="number"
                 id="discount"
-                value={formData.discount}
+                value={formData.discount || ''}
                 onChange={(e) => setFormData({ ...formData, discount: parseFloat(e.target.value) || 0 })}
                 className="input"
                 min="0"
+                inputMode="numeric"
+                placeholder="0"
               />
               <p className="input-hint">Optionnel</p>
             </div>
@@ -298,10 +302,12 @@ export default function NewInvoicePage() {
               <input
                 type="number"
                 id="deliveryFee"
-                value={formData.deliveryFee}
+                value={formData.deliveryFee || ''}
                 onChange={(e) => setFormData({ ...formData, deliveryFee: parseFloat(e.target.value) || 0 })}
                 className="input"
                 min="0"
+                inputMode="numeric"
+                placeholder="0"
               />
               <p className="input-hint">Optionnel</p>
             </div>
@@ -313,10 +319,12 @@ export default function NewInvoicePage() {
               <input
                 type="number"
                 id="amountPaid"
-                value={formData.amountPaid}
+                value={formData.amountPaid || ''}
                 onChange={(e) => setFormData({ ...formData, amountPaid: parseFloat(e.target.value) || 0 })}
                 className="input"
                 min="0"
+                inputMode="numeric"
+                placeholder="0"
               />
               <p className="input-hint">Le reste sera calculé automatiquement</p>
             </div>
@@ -372,7 +380,7 @@ export default function NewInvoicePage() {
               </div>
             )}
 
-            <div className="flex items-center justify-between rounded-xl bg-gradient-to-r from-primary-500 to-accent-500 px-4 py-3 text-white">
+            <div className="flex items-center justify-between rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 px-4 py-3 text-white">
               <span className="font-semibold">Total</span>
               <span className="text-lg font-bold">
                 {calculation.totalAmount.toLocaleString('fr-FR')} FCFA
