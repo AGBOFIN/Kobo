@@ -42,7 +42,7 @@ async function testSecurity() {
       
       // Vérifier que le rôle est bien USER malgré la tentative
       const createdUser = await prisma.user.findUnique({
-        where: { id: maliciousUserId },
+        where: { id: maliciousUserId! },
         select: { role: true, email: true },
       })
       
