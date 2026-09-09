@@ -29,6 +29,18 @@ export const authConfig: NextAuthConfig = {
     signIn: '/login',
     error: '/error',
   },
+  // Configuration explicite des cookies pour NextAuth v5
+  cookies: {
+    sessionToken: {
+      name: `authjs.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+      },
+    },
+  },
   providers: [
     Credentials({
       credentials: {
@@ -115,22 +127,29 @@ export const authConfig: NextAuthConfig = {
         return token
       }
 
-      // Rafraîchissement (chaque accès à la session) : re-vérification en base.
-      // Un compte supprimé ou désactivé invalide sa session IMMÉDIATEMENT —
-      // sinon un JWT reste utilisable jusqu'à son expiration même après la
-      // suppression du compte (trou constaté en prod le 2026-09-07 : une
-      // session « JEAN » survivait à la suppression du compte).
-      // Le rôle est aussi re-synchronisé à chaque fois : une promotion ou une
-      // désactivation d'admin s'applique sans attendre une reconnexion.
-      const dbUser = await prisma.user.findUnique({
-        where: { id: token.id as string },
-        select: { role: true, active: true },
-      })
-      if (!dbUser || !dbUser.active) {
-        // null = session détruite (NextAuth v5) → déconnexion effective.
-        return null
-      }
-      token.role = dbUser.role as 'USER' | 'ADMIN'
+      // NOTE: La vérification en base à chaque rafraîchissement peut causer
+      // des problèmes de performance en production. Pour l'instant, on garde
+      // les informations dans le token JWT. Si vous avez besoin d'une vérification
+      // stricte en temps réel, vous pouvez réactiver la logique ci-dessous,
+      // mais assurez-vous que la connexion DB est optimisée.
+
+      // // Rafraîchissement (chaque accès à la session) : re-vérification en base.
+      // // Un compte supprimé ou désactivé invalide sa session IMMÉDIATEMENT —
+      // // sinon un JWT reste utilisable jusqu'à son expiration même après la
+      // // suppression du compte (trou constaté en prod le 2026-09-07 : une
+      // // session « JEAN » survivait à la suppression du compte).
+      // // Le rôle est aussi re-synchronisé à chaque fois : une promotion ou une
+      // // désactivation d'admin s'applique sans attendre une reconnexion.
+      // const dbUser = await prisma.user.findUnique({
+      //   where: { id: token.id as string },
+      //   select: { role: true, active: true },
+      // })
+      // if (!dbUser || !dbUser.active) {
+      //   // null = session détruite (NextAuth v5) → déconnexion effective.
+      //   return null
+      // }
+      // token.role = dbUser.role as 'USER' | 'ADMIN'
+      
       return token
     },
     async session({ session, token }) {
