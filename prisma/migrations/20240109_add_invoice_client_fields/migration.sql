@@ -1,4 +1,4 @@
 -- Alter table
-ALTER TABLE "Invoice" ADD COLUMN "clientEmail" TEXT;
-ALTER TABLE "Invoice" ADD COLUMN "clientAddress" TEXT;
-ALTER TABLE "Invoice" ADD COLUMN "dueDate" TIMESTAMP(3);
+ALTER TABLE "Invoice" ADD COLUMN IF NOT EXISTS "clientEmail" TEXT;
+ALTER TABLE "Invoice" ADD COLUMN IF NOT EXISTS "clientAddress" TEXT;
+ALTER TABLE "Invoice" ADD COLUMN IF NOT EXISTS "dueDate" TIMESTAMP(3);

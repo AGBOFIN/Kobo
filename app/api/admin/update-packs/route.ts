@@ -9,7 +9,7 @@ import { requireAdmin } from '@/lib/admin/guard'
 export async function POST(request: NextRequest) {
   // Vérifier que l'utilisateur est admin
   const authCheck = await requireAdmin(request)
-  if (authCheck) return authCheck
+  if (authCheck.error) return authCheck.error
 
   try {
     // Mettre à jour le pack Débutant → Découverte

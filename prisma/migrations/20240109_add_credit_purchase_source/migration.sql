@@ -12,7 +12,7 @@ BEGIN
     EXCEPTION
         WHEN undefined_column THEN
             RAISE NOTICE 'Column packId does not exist or is already nullable';
-        WHEN other THEN
+        WHEN OTHERS THEN
             RAISE NOTICE 'Error making packId nullable: %', SQLERRM;
     END;
 END $$;
