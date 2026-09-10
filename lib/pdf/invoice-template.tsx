@@ -13,6 +13,8 @@ interface InvoiceTemplateProps {
     date: Date
     clientName: string
     clientPhone: string
+    clientEmail?: string
+    clientAddress?: string
     items: Array<{
       designation: string
       quantity: number
@@ -27,6 +29,7 @@ interface InvoiceTemplateProps {
     remainingAmount: number
     status: string
     paymentMode?: string
+    dueDate?: Date
   }
   seller: {
     name: string
@@ -34,15 +37,18 @@ interface InvoiceTemplateProps {
     address?: string
     companyName?: string
     logoUrl?: string
+    email?: string
   }
 }
 
-// Palette Kobo
-const EMERALD = '#059669'
-const EMERALD_DARK = '#064e3b'
-const INK = '#1c1917'
-const MUTED = '#78716c'
-const LINE = '#e7e5e4'
+// Palette Kobo - Indigo Marché
+const PRIMARY = '#2E3A87' // Indigo profond - confiance, professionnalisme
+const PRIMARY_DARK = '#1e265f' // Indigo plus foncé
+const SECONDARY = '#D46A3C' // Terracotta - chaleur, terre
+const MUTED = '#924828' // Terracotta foncé
+const LINE = '#dde1ed' // Indigo très clair
+const ACCENT = '#4A9B7F' // Vert menthe doux - fraîcheur
+const INK = '#1a1a1a' // Noir doux
 
 function statusLabel(status: string): string {
   if (status === 'PAYE') return 'Payé'
@@ -51,9 +57,9 @@ function statusLabel(status: string): string {
 }
 
 function statusColor(status: string): string {
-  if (status === 'PAYE') return '#059669'
-  if (status === 'PARTIEL') return '#d97706'
-  return '#dc2626'
+  if (status === 'PAYE') return '#4A9B7F' // Vert menthe doux pour succès
+  if (status === 'PARTIEL') return '#D46A3C' // Terracotta pour partiel
+  return '#2E3A87' // Indigo profond pour non payé
 }
 
 function paymentModeLabel(mode?: string): string {
@@ -81,7 +87,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     paddingBottom: 16,
     borderBottomWidth: 2,
-    borderBottomColor: EMERALD,
+    borderBottomColor: PRIMARY,
     marginBottom: 20,
   },
   brandRow: {
@@ -92,7 +98,7 @@ const styles = StyleSheet.create({
     width: 26,
     height: 26,
     borderRadius: 7,
-    backgroundColor: EMERALD,
+    backgroundColor: PRIMARY,
     color: '#ffffff',
     fontSize: 15,
     fontWeight: 'bold',
@@ -103,7 +109,7 @@ const styles = StyleSheet.create({
   brandName: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: EMERALD_DARK,
+    color: PRIMARY_DARK,
     letterSpacing: 0.5,
   },
   titleBlock: {
@@ -112,7 +118,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: EMERALD_DARK,
+    color: PRIMARY_DARK,
     letterSpacing: 2,
   },
   meta: {
@@ -154,7 +160,7 @@ const styles = StyleSheet.create({
   },
   tableHead: {
     flexDirection: 'row',
-    backgroundColor: EMERALD,
+    backgroundColor: PRIMARY,
     borderRadius: 4,
     paddingVertical: 6,
     paddingHorizontal: 8,
@@ -201,7 +207,7 @@ const styles = StyleSheet.create({
   totalRowBold: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: EMERALD_DARK,
+    backgroundColor: PRIMARY_DARK,
     color: '#ffffff',
     borderRadius: 4,
     paddingVertical: 7,
@@ -281,6 +287,11 @@ export function InvoiceTemplate({ invoice, seller }: InvoiceTemplateProps) {
             <Text style={styles.meta}>
               Date : {new Date(invoice.date).toLocaleDateString('fr-FR')}
             </Text>
+            {invoice.dueDate && (
+              <Text style={styles.meta}>
+                Échéance : {new Date(invoice.dueDate).toLocaleDateString('fr-FR')}
+              </Text>
+            )}
           </View>
         </View>
 
@@ -295,15 +306,25 @@ export function InvoiceTemplate({ invoice, seller }: InvoiceTemplateProps) {
               />
             ) : null}
             <Text style={styles.partyName}>{seller.companyName || seller.name}</Text>
+            {seller.name && seller.companyName ? (
+              <Text style={styles.partyLine}>{seller.name}</Text>
+            ) : null}
             {seller.address ? (
               <Text style={styles.partyLine}>{seller.address}</Text>
             ) : null}
             {seller.phone ? <Text style={styles.partyLine}>Tél : {seller.phone}</Text> : null}
+            {seller.email ? <Text style={styles.partyLine}>Email : {seller.email}</Text> : null}
           </View>
           <View style={[styles.block, { alignItems: 'flex-end' }]}>
             <Text style={styles.blockTitle}>Facturé à</Text>
             <Text style={styles.partyName}>{invoice.clientName}</Text>
             <Text style={styles.partyLine}>Tél : {invoice.clientPhone}</Text>
+            {invoice.clientEmail ? (
+              <Text style={styles.partyLine}>Email : {invoice.clientEmail}</Text>
+            ) : null}
+            {invoice.clientAddress ? (
+              <Text style={styles.partyLine}>{invoice.clientAddress}</Text>
+            ) : null}
           </View>
         </View>
 

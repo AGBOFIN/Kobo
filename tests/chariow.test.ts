@@ -3,6 +3,7 @@ import { createHmac } from 'crypto'
 import {
   ChariowProvider,
   verifyChariowWebhookSignature,
+  toChariowPhone,
 } from '../lib/payment/chariow-provider'
 import { calculatePricing } from '../lib/validations/pricing'
 import { calculateInvoice } from '../lib/validations/invoice'
@@ -59,7 +60,7 @@ describe('Chariow — vérification de signature webhook (Pulse)', () => {
     sale: {
       id: 'sal_xyz789abc',
       status: 'completed',
-      amount: { value: 500, currency: 'XOF' },
+      amount: { value: 1500, currency: 'XOF' },
       custom_metadata: { kobo_user_id: 'user_1', kobo_pack_id: 'pack_1' },
     },
     customer: { email: 'awa@kobo.test' },
@@ -73,7 +74,7 @@ describe('Chariow — vérification de signature webhook (Pulse)', () => {
   })
 
   it('rejette un corps modifié (tampering)', () => {
-    const tampered = payload.replace('500', '999999')
+    const tampered = payload.replace('1500', '999999')
     expect(verifyChariowWebhookSignature(payload, sign(tampered, secret), secret)).toBe(false)
   })
 
@@ -88,6 +89,56 @@ describe('Chariow — vérification de signature webhook (Pulse)', () => {
   it('rejette une signature ou un secret absent', () => {
     expect(verifyChariowWebhookSignature(payload, null, secret)).toBe(false)
     expect(verifyChariowWebhookSignature(payload, sign(payload, secret), '')).toBe(false)
+  })
+})
+
+/**
+ * Chariow — format du téléphone attendu par POST /v1/checkout.
+ *
+ * Doc (chariow.dev → Initiate Checkout) :
+ *   phone.number       = numéro NATIONAL, chiffres seuls (ex. US « 1234567890 »,
+ *                        sans l'indicatif « 1 ») ;
+ *   phone.country_code = code ISO 3166-1 alpha-2 (« TG », PAS « 228 »).
+ *
+ * Régression : « +22890123456 » était envoyé brut (indicatif inclus) → 400
+ * « Invalid phone number. Check the number and country code. »
+ */
+describe('Chariow — normalisation du téléphone (format API documenté)', () => {
+  it('retire l\'indicatif international +228 d\'un numéro togolais (cas du bug)', () => {
+    expect(toChariowPhone('+22890123456')).toEqual({
+      number: '90123456',
+      countryCode: 'TG',
+    })
+  })
+
+  it('gère les espaces et le préfixe international 00', () => {
+    expect(toChariowPhone('+228 90 12 34 56')).toEqual({ number: '90123456', countryCode: 'TG' })
+    expect(toChariowPhone('0022890123456')).toEqual({ number: '90123456', countryCode: 'TG' })
+  })
+
+  it('laisse tel quel un numéro déjà national (8 chiffres, Togo)', () => {
+    expect(toChariowPhone('90 12 34 56')).toEqual({ number: '90123456', countryCode: 'TG' })
+    // 8 chiffres commençant par 22 : NE PAS confondre avec un indicatif
+    // (la numérotation togolaise à 8 chiffres prime sur la détection d'indicatif)
+    expect(toChariowPhone('22501234')).toEqual({ number: '22501234', countryCode: 'TG' })
+  })
+
+  it('retire le « 0 » de trunk initial (format local 9 chiffres)', () => {
+    expect(toChariowPhone('090123456')).toEqual({ number: '90123456', countryCode: 'TG' })
+  })
+
+  it('détecte les indicatifs des pays voisins et de la diaspora', () => {
+    expect(toChariowPhone('+229 97 12 34 56')).toEqual({ number: '97123456', countryCode: 'BJ' })
+    expect(toChariowPhone('+226 70 12 34 56')).toEqual({ number: '70123456', countryCode: 'BF' })
+    expect(toChariowPhone('+225 07 12 34 56 78')).toEqual({ number: '0712345678', countryCode: 'CI' })
+    expect(toChariowPhone('+233 24 123 4567')).toEqual({ number: '241234567', countryCode: 'GH' })
+    expect(toChariowPhone('+33 6 12 34 56 78')).toEqual({ number: '612345678', countryCode: 'FR' })
+  })
+
+  it('tombe sur un placeholder propre quand il n\'y a aucun numéro', () => {
+    expect(toChariowPhone('')).toEqual({ number: '00000000', countryCode: 'TG' })
+    expect(toChariowPhone(null)).toEqual({ number: '00000000', countryCode: 'TG' })
+    expect(toChariowPhone('pas un numéro')).toEqual({ number: '00000000', countryCode: 'TG' })
   })
 })
 
@@ -178,18 +229,18 @@ describe('ChariowProvider — mapping des événements Pulse', () => {
  */
 describe('Déduplication des crédits (invariants de schéma)', () => {
   const PACKS = [
-    { id: 'cmtpo381s0000797fsj1qtvru', price: 500, credits: 5 },
-    { id: 'cmtpo381s0001797ftorq9ngj', price: 1000, credits: 15 },
-    { id: 'cmtpo381s0002797frrn90ewb', price: 2000, credits: 50 },
+    { id: 'cmtpo381s0000797fsj1qtvru', price: 1500, credits: 15 },
+    { id: 'cmtpo381s0001797ftorq9ngj', price: 5000, credits: 60 },
+    { id: 'cmtpo381s0002797frrn90ewb', price: 10000, credits: 150 },
   ]
 
   const priceToCredits = (price: number) =>
     PACKS.find(p => p.price === price)?.credits ?? 0
 
   it('chaque prix de pack correspond à un nombre de crédits connu', () => {
-    expect(priceToCredits(500)).toBe(5)
-    expect(priceToCredits(1000)).toBe(15)
-    expect(priceToCredits(2000)).toBe(50)
+    expect(priceToCredits(1500)).toBe(15)
+    expect(priceToCredits(5000)).toBe(60)
+    expect(priceToCredits(10000)).toBe(150)
     expect(priceToCredits(9999)).toBe(0) // prix inconnu → jamais crédité
   })
 

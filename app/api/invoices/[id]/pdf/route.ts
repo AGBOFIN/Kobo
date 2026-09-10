@@ -26,6 +26,7 @@ async function ensureAndGetPdf(invoiceId: string, userId: string) {
       user: {
         select: {
           name: true,
+          email: true,
           phone: true,
           address: true,
           companyName: true,
@@ -69,6 +70,9 @@ async function ensureAndGetPdf(invoiceId: string, userId: string) {
       date: invoice.date,
       clientName: invoice.clientName,
       clientPhone: invoice.clientPhone,
+      clientEmail: invoice.clientEmail || undefined,
+      clientAddress: invoice.clientAddress || undefined,
+      dueDate: invoice.dueDate || undefined,
       items: invoice.items.map(item => ({
         designation: item.designation,
         quantity: item.quantity,
@@ -89,6 +93,7 @@ async function ensureAndGetPdf(invoiceId: string, userId: string) {
       phone: invoice.user.phone || undefined,
       address: invoice.user.address || undefined,
       companyName: invoice.user.companyName || undefined,
+      email: invoice.user.email || undefined,
       // react-pdf fetch l'image côté serveur : l'URL relative doit être rendue
       // absolue (base = NEXTAUTH_URL).
       logoUrl: invoice.user.logoUrl

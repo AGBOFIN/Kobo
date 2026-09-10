@@ -9,21 +9,21 @@ async function main() {
     await prisma.creditPack.createMany({
       data: [
         {
-          name: 'Pack Débutant',
-          price: 500,
-          creditsCount: 5,
-          active: true,
-        },
-        {
-          name: 'Pack Standard',
-          price: 1000,
+          name: 'Pack Découverte',
+          price: 1500,
           creditsCount: 15,
           active: true,
         },
         {
+          name: 'Pack Standard',
+          price: 5000,
+          creditsCount: 60,
+          active: true,
+        },
+        {
           name: 'Pack Pro',
-          price: 2000,
-          creditsCount: 50,
+          price: 10000,
+          creditsCount: 150,
           active: true,
         },
       ],

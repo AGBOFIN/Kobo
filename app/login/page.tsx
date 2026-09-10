@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { signIn } from 'next-auth/react'
+import { signIn } from '@/lib/auth/auth'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
@@ -28,8 +28,15 @@ export default function LoginPage() {
 
       if (result?.error) {
         setError('Email ou mot de passe incorrect')
+        window.scrollTo({ top: 0, behavior: 'smooth' })
       } else {
-        router.push('/dashboard/dashboard')
+        // Redirection selon le rôle : un administrateur arrive directement
+        // dans son espace, un commerçant dans son tableau de bord.
+        if (result.user?.role === 'ADMIN') {
+          router.push('/admin')
+        } else {
+          router.push('/dashboard/dashboard')
+        }
         router.refresh()
       }
     } catch (error) {
@@ -60,11 +67,12 @@ export default function LoginPage() {
           <input
             type="email"
             id="email"
+            name="email"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             className="input"
             placeholder="votre@email.com"
-            autoComplete="email"
+            autoComplete="username"
             required
           />
         </div>
@@ -84,6 +92,7 @@ export default function LoginPage() {
           <input
             type="password"
             id="password"
+            name="password"
             value={formData.password}
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             className="input"

@@ -74,17 +74,18 @@ model CreditPack {
 model CreditPurchase {
   id                String        @id @default(cuid())
   userId            String
-  packId            String
+  packId            String?
   amount            Int
   creditsPurchased  Int
   status            String        @default("EN_ATTENTE")
   provider          String
   transactionRef    String?
+  source            String        @default("PURCHASE") // "PURCHASE" ou "FREE_TIER"
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
 
   user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  pack              CreditPack    @relation(fields: [packId], references: [id])
+  pack              CreditPack?   @relation(fields: [packId], references: [id])
 
   // Déduplication des webhooks Chariow : une référence de vente ne peut être
   // confirmée qu'une seule fois (contrainte au niveau base de données).
@@ -92,6 +93,7 @@ model CreditPurchase {
   @@index([userId])
   @@index([status])
   @@index([createdAt])
+  @@index([source])
 }
 
 model Invoice {
@@ -100,7 +102,10 @@ model Invoice {
   invoiceNumber     String
   clientName        String
   clientPhone       String
+  clientEmail       String?
+  clientAddress     String?
   date              DateTime      @default(now())
+  dueDate           DateTime?
   subtotal          Int
   discount          Int           @default(0)
   discountPercent   Float?

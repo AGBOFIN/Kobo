@@ -1,31 +1,73 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palette Kobo — vert émeraude, chaleureux et orienté commerce */
-  --color-primary-50: #ecfdf5;
-  --color-primary-100: #d1fae5;
-  --color-primary-200: #a7f3d0;
-  --color-primary-300: #6ee7b7;
-  --color-primary-400: #34d399;
-  --color-primary-500: #10b981;
-  --color-primary-600: #059669;
-  --color-primary-700: #047857;
-  --color-primary-800: #065f46;
-  --color-primary-900: #064e3b;
+  /* Palette Kobo — Indigo Marché */
+  /* Primaire: Indigo profond - confiance, professionnalisme */
+  --color-primary-50: #eef0f5;
+  --color-primary-100: #dde1ed;
+  --color-primary-200: #bdc3db;
+  --color-primary-300: #9ca5c9;
+  --color-primary-400: #7c87b7;
+  --color-primary-500: #2E3A87;
+  --color-primary-600: #263073;
+  --color-primary-700: #1e265f;
+  --color-primary-800: #161c4b;
+  --color-primary-900: #0e1237;
 
-  --color-background: #fafaf9;
-  --color-foreground: #1c1917;
+  /* Secondaire: Terracotta - chaleur, terre, vitalité */
+  --color-secondary-50: #fef6f2;
+  --color-secondary-100: #fdece4;
+  --color-secondary-200: #fbd9c9;
+  --color-secondary-300: #f9c6ae;
+  --color-secondary-400: #f7b393;
+  --color-secondary-500: #D46A3C;
+  --color-secondary-600: #b35932;
+  --color-secondary-700: #924828;
+  --color-secondary-800: #71371e;
+  --color-secondary-900: #502614;
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Accent: Vert menthe doux - fraîcheur, croissance */
+  --color-accent-50: #eef7f4;
+  --color-accent-100: #deefe9;
+  --color-accent-200: #bde0d3;
+  --color-accent-300: #9cd1bd;
+  --color-accent-400: #7cc2a7;
+  --color-accent-500: #4A9B7F;
+  --color-accent-600: #3e846c;
+  --color-accent-700: #326d59;
+  --color-accent-800: #265646;
+  --color-accent-900: #1a3f33;
+
+  /* Succès: Vert - validation, confirmation */
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-200: #bbf7d0;
+  --color-success-300: #86efac;
+  --color-success-400: #4ade80;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+  --color-success-700: #15803d;
+  --color-success-800: #166534;
+  --color-success-900: #14532d;
+
+  /* Neutres: Blanc cassé et gris profond */
+  --color-background: #faf9f6;
+  --color-foreground: #1a1a1a;
+
+  --font-display: var(--font-space-grotesk);
+  --font-body: var(--font-inter);
 }
 
 @layer base {
   body {
     background: var(--color-background);
     color: var(--color-foreground);
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
   }
 
   ::selection {
@@ -42,7 +84,7 @@
 @layer components {
   /* ===== Boutons ===== */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-150 select-none whitespace-nowrap;
+    @apply inline-flex items-center justify-center gap-2 rounded-sm font-semibold transition-all duration-150 select-none whitespace-nowrap;
   }
   .btn:active {
     @apply scale-[0.98];
@@ -60,24 +102,24 @@
     @apply h-9 px-3.5 text-sm;
   }
   .btn-primary {
-    @apply bg-primary-600 text-white hover:bg-primary-700 shadow-sm shadow-primary-600/20;
+    @apply bg-primary-500 text-white hover:bg-primary-600 border-2 border-primary-500;
   }
   .btn-secondary {
-    @apply bg-white text-stone-800 border border-stone-300 hover:border-stone-400 hover:bg-stone-50 shadow-sm;
+    @apply bg-white text-foreground border-2 border-primary-500 hover:bg-primary-50;
   }
   .btn-ghost {
-    @apply text-stone-600 hover:text-stone-900 hover:bg-stone-100;
+    @apply text-foreground hover:bg-primary-50;
   }
   .btn-success {
-    @apply bg-emerald-600 text-white hover:bg-emerald-700;
+    @apply bg-success-500 text-white hover:bg-success-600 border-2 border-success-500;
   }
   .btn-danger {
-    @apply bg-red-600 text-white hover:bg-red-700;
+    @apply bg-accent-500 text-white hover:bg-accent-600 border-2 border-accent-500;
   }
 
   /* ===== Cartes ===== */
   .card {
-    @apply bg-white rounded-2xl border border-stone-200/80 shadow-sm;
+    @apply bg-white rounded-sm border-2 border-primary-200;
   }
   .card-pad {
     @apply p-5 sm:p-6;
@@ -85,37 +127,37 @@
 
   /* ===== Formulaires ===== */
   .label {
-    @apply block text-sm font-medium text-stone-700 mb-1.5;
+    @apply block text-sm font-medium text-foreground mb-1.5;
   }
   .input,
   .select {
-    @apply w-full h-11 px-3.5 rounded-xl border border-stone-300 bg-white text-stone-900 placeholder:text-stone-400 text-sm sm:text-base transition-colors focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/25;
+    @apply w-full h-11 px-3.5 rounded-sm border-2 border-primary-300 bg-white text-foreground placeholder:text-primary-400 text-sm sm:text-base transition-colors focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/25;
   }
   .input-error {
-    @apply border-red-400 focus:border-red-500 focus:ring-red-500/25;
+    @apply border-accent-500 focus:border-accent-600 focus:ring-accent-500/25;
   }
   .select {
     @apply appearance-none pr-9 bg-no-repeat;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2378716c' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232E3A87' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
     background-position: right 0.75rem center;
     background-size: 1rem;
   }
 
   /* ===== Badges ===== */
   .badge {
-    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+    @apply inline-flex items-center gap-1.5 rounded-sm px-2.5 py-0.5 text-xs font-semibold border-2;
   }
   .badge-green {
-    @apply bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20;
+    @apply bg-success-50 text-success-700 border-success-300;
   }
   .badge-yellow {
-    @apply bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20;
+    @apply bg-secondary-50 text-secondary-700 border-secondary-300;
   }
   .badge-red {
-    @apply bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20;
+    @apply bg-accent-50 text-accent-700 border-accent-300;
   }
   .badge-stone {
-    @apply bg-stone-100 text-stone-600 ring-1 ring-inset ring-stone-600/10;
+    @apply bg-primary-50 text-foreground border-primary-200;
   }
 }
 
