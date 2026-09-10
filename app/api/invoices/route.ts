@@ -142,6 +142,32 @@ export async function GET(request: NextRequest) {
       userId: session.user.id,
     }
 
+    // Vérifier le pack de l'utilisateur pour la limitation d'historique
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      include: {
+        creditPurchases: {
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+          include: {
+            pack: true,
+          },
+        },
+      },
+    })
+
+    // Si l'utilisateur n'a que le pack Découverte (ou aucun pack), limiter à 30 jours
+    const hasPaidPack = user?.creditPurchases.some(
+      (purchase) => purchase.pack && purchase.pack.name !== 'Pack Découverte'
+    )
+
+    if (!hasPaidPack) {
+      // Limitation à 30 jours pour le pack Découverte
+      const thirtyDaysAgo = new Date()
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+      where.createdAt = { gte: thirtyDaysAgo }
+    }
+
     if (search) {
       // Pas de mode: 'insensitive' — non supporté par le connecteur SQLite
       // (crash Prisma). La recherche reste sensible à la casse pour le MVP.
@@ -185,6 +211,7 @@ export async function GET(request: NextRequest) {
         total,
         totalPages: Math.ceil(total / limit),
       },
+      hasPaidPack, // Indique au frontend si l'utilisateur a un pack payant
     })
   } catch (error) {
     console.error('Invoices fetch error:', error)

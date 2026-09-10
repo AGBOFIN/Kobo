@@ -41,13 +41,13 @@ interface InvoiceTemplateProps {
   }
 }
 
-// Palette Kobo - Bold African Modern
-const PRIMARY = '#2d5a27' // Vert profond - nature africaine
-const PRIMARY_DARK = '#1d3a19' // Vert plus foncé
-const SECONDARY = '#d4a017' // Ocre jaune - terre, sable
-const MUTED = '#643c0b' // Ocre foncé
-const LINE = '#e0ebe0' // Vert très clair
-const ACCENT = '#c41e3a' // Rouge terre - vitalité
+// Palette Kobo - Indigo Marché
+const PRIMARY = '#2E3A87' // Indigo profond - confiance, professionnalisme
+const PRIMARY_DARK = '#1e265f' // Indigo plus foncé
+const SECONDARY = '#D46A3C' // Terracotta - chaleur, terre
+const MUTED = '#924828' // Terracotta foncé
+const LINE = '#dde1ed' // Indigo très clair
+const ACCENT = '#4A9B7F' // Vert menthe doux - fraîcheur
 const INK = '#1a1a1a' // Noir doux
 
 function statusLabel(status: string): string {
@@ -57,9 +57,9 @@ function statusLabel(status: string): string {
 }
 
 function statusColor(status: string): string {
-  if (status === 'PAYE') return '#059669'
-  if (status === 'PARTIEL') return '#d97706'
-  return '#dc2626'
+  if (status === 'PAYE') return '#4A9B7F' // Vert menthe doux pour succès
+  if (status === 'PARTIEL') return '#D46A3C' // Terracotta pour partiel
+  return '#2E3A87' // Indigo profond pour non payé
 }
 
 function paymentModeLabel(mode?: string): string {

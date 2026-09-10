@@ -1,42 +1,42 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palette Kobo — Bold African Modern */
-  /* Primaire: Vert profond - nature africaine, croissance */
-  --color-primary-50: #f0f5f0;
-  --color-primary-100: #e0ebe0;
-  --color-primary-200: #c1dcc1;
-  --color-primary-300: #a2cda2;
-  --color-primary-400: #83be83;
-  --color-primary-500: #2d5a27;
-  --color-primary-600: #254a20;
-  --color-primary-700: #1d3a19;
-  --color-primary-800: #152a12;
-  --color-primary-900: #0d1a0b;
+  /* Palette Kobo — Indigo Marché */
+  /* Primaire: Indigo profond - confiance, professionnalisme */
+  --color-primary-50: #eef0f5;
+  --color-primary-100: #dde1ed;
+  --color-primary-200: #bdc3db;
+  --color-primary-300: #9ca5c9;
+  --color-primary-400: #7c87b7;
+  --color-primary-500: #2E3A87;
+  --color-primary-600: #263073;
+  --color-primary-700: #1e265f;
+  --color-primary-800: #161c4b;
+  --color-primary-900: #0e1237;
 
-  /* Secondaire: Ocre jaune - terre, sable, chaleur */
-  --color-secondary-50: #fdf8ed;
-  --color-secondary-100: #fbf0db;
-  --color-secondary-200: #f7e0b7;
-  --color-secondary-300: #f3d093;
-  --color-secondary-400: #efc06f;
-  --color-secondary-500: #d4a017;
-  --color-secondary-600: #b88714;
-  --color-secondary-700: #9c6e11;
-  --color-secondary-800: #80550e;
-  --color-secondary-900: #643c0b;
+  /* Secondaire: Terracotta - chaleur, terre, vitalité */
+  --color-secondary-50: #fef6f2;
+  --color-secondary-100: #fdece4;
+  --color-secondary-200: #fbd9c9;
+  --color-secondary-300: #f9c6ae;
+  --color-secondary-400: #f7b393;
+  --color-secondary-500: #D46A3C;
+  --color-secondary-600: #b35932;
+  --color-secondary-700: #924828;
+  --color-secondary-800: #71371e;
+  --color-secondary-900: #502614;
 
-  /* Accent: Rouge terre - vitalité, énergie */
-  --color-accent-50: #fef0f0;
-  --color-accent-100: #fde0e0;
-  --color-accent-200: #fcc0c0;
-  --color-accent-300: #faa0a0;
-  --color-accent-400: #f88080;
-  --color-accent-500: #c41e3a;
-  --color-accent-600: #a31931;
-  --color-accent-700: #821428;
-  --color-accent-800: #610f1f;
-  --color-accent-900: #400a14;
+  /* Accent: Vert menthe doux - fraîcheur, croissance */
+  --color-accent-50: #eef7f4;
+  --color-accent-100: #deefe9;
+  --color-accent-200: #bde0d3;
+  --color-accent-300: #9cd1bd;
+  --color-accent-400: #7cc2a7;
+  --color-accent-500: #4A9B7F;
+  --color-accent-600: #3e846c;
+  --color-accent-700: #326d59;
+  --color-accent-800: #265646;
+  --color-accent-900: #1a3f33;
 
   /* Succès: Vert - validation, confirmation */
   --color-success-50: #f0fdf4;
@@ -54,16 +54,20 @@
   --color-background: #faf9f6;
   --color-foreground: #1a1a1a;
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-space-grotesk);
+  --font-body: var(--font-inter);
 }
 
 @layer base {
   body {
     background: var(--color-background);
     color: var(--color-foreground);
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
   }
 
   ::selection {
@@ -134,7 +138,7 @@
   }
   .select {
     @apply appearance-none pr-9 bg-no-repeat;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232d5a27' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232E3A87' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
     background-position: right 0.75rem center;
     background-size: 1rem;
   }
